@@ -1,11 +1,23 @@
 const colorClasses = {
-  primaryFill: "bg-primary text-white",
-  dangerFill: "bg-danger text-white",
-  primaryNoFill: "bg-transparent text-primary",
-  darkGrayNoFill: "bg-transparent text-darkGray",
-  dangerNoFill: "bg-transparent text-danger",
-  secondaryNoFill: "bg-transparent text-secondary",
-  successNoFill: "bg-transparent text-success",
+  // FILLED
+  primaryFill: "bg-[#2c3e5e] text-white hover:bg-[#354b70]",
+  dangerFill: "bg-[#ba1618] text-white hover:bg-[#d11f21]",
+
+  // NO FILL (underline on hover)
+  primaryNoFill:
+    "bg-transparent text-[#23334A] hover:underline hover:underline-offset-5 hover:decoration-2",
+  
+  darkGrayNoFill:
+    "bg-transparent text-[#767676] hover:underline hover:underline-offset-5 hover:decoration-2",
+  
+  dangerNoFill:
+    "bg-transparent text-[#ba1618] hover:underline hover:underline-offset-5 hover:decoration-2",
+  
+  secondaryNoFill:
+    "bg-transparent text-[#42608B] hover:underline hover:underline-offset-5 hover:decoration-2",
+
+  successNoFill:
+    "bg-transparent text-[#16a34a] hover:underline hover:underline-offset-5 hover:decoration-2",
 }
 
 interface ButtonProps {

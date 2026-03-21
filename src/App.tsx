@@ -9,7 +9,13 @@ function App() {
 
   return (
     <>
-      <Button name="Normal Button" onClick={() => {}}></Button>
+      <Button name="Normal Button" onClick={() => {}} color="primaryFill"></Button>
+      <Button name="Normal Button" onClick={() => {}} color="dangerFill"></Button>
+      <Button name="Normal Button" onClick={() => {}} color="dangerNoFill"></Button>
+      <Button name="Normal Button" onClick={() => {}} color="darkGrayNoFill"></Button>
+      <Button name="Normal Button" onClick={() => {}} color="primaryNoFill"></Button>
+      <Button name="Normal Button" onClick={() => {}} color="secondaryNoFill"></Button>
+      <Button name="Normal Button" onClick={() => {}} color="successNoFill"></Button>
     </>
   )
 }
