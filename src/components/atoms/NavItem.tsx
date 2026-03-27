@@ -29,10 +29,10 @@ const NavItem = ({
     return (
         <button className={`flex justify-between items-center py-2 px-4 w-full rounded-xl ${styleClasses[style].hover} ${styleClasses[style].text} transition ${className}`} onClick={onClick}>
             <div className="flex justify-center items-center gap-2">
-                {Icon && <Icon className="w-4 h-4" />}
+                {Icon && <Icon className="w-5 h-5" />}
                 <p className={`font-semibold`}>{text}</p>
             </div>
-            {isDropdown && <ChevronDown className={`w-4 h-4 ${isOpen? "rotate-180" : "rotate-0"}`}/>}
+            {isDropdown && <ChevronDown className={`w-5 h-5 ${isOpen? "rotate-180" : "rotate-0"}`}/>}
         </button>
     )
 }
