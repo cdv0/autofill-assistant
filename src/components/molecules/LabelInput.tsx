@@ -5,19 +5,25 @@ interface LabelInputProps extends InputProps {
     labelText: string;
     addTrashIcon?: boolean;
     showPassword?: boolean;
+    onClickTrash?: () => void;
 }
 
 const LabelInput = ({
     labelText,
     addTrashIcon = false,
     showPassword = false,
+    onClickTrash,
     ...inputProps
 }: LabelInputProps) => {
     return (
         <div className="flex flex-col gap-1.5">
             <div className="flex gap-2 items-center justify-between">
               <p className="font-medium text-base">{labelText}</p>
-              {addTrashIcon && <Trash2 className="w-5 h-5 hover:text-danger transition" />}
+              {addTrashIcon && 
+              <button>
+                <Trash2 strokeWidth={1.5} className="w-5 h-5 hover:text-danger" />
+              </button>
+              }
             </div>
             <Input {...inputProps} />
             {showPassword === true &&

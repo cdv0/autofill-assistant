@@ -33,11 +33,11 @@ const GroupEdit = ({ groupName, onClickBack, onClickAddField, onClickTrash }: Gr
       {/* GRID COLUMNS */}
       <div className="grid grid-cols-2 gap-x-12 gap-y-8">
         {fields.map((field) => (
-          <LabelInput key={field.id} labelText={field.label} placeholder="Type here" type="text" addTrashIcon={true} onClick={onClickTrash} />
+          <LabelInput key={field.id} labelText={field.label} placeholder="Type here" type="text" addTrashIcon={true} onClickTrash={onClickTrash} />
         ))}
 
         {/* ADD NEW FIELD BUTTON */}
-        <div className="pt-6">
+        <div className="pt-7">
           <Button color="darkGrayNoFill" name="Add new field" icon={Plus} onClick={onClickAddField}/>
         </div>
       </div>
