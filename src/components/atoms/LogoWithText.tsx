@@ -1,7 +1,7 @@
 const sizeClasses = {
-    sm: { img: "h-12 w-12", text: "text-lg"},
-    md: { img: "h-14 w-14", text: "text-xl"},
-    lg: { img: "h-16 w-16", text: "text-2xl"},
+    sm: { img: "h-10 w-10", text: "text-lg"},
+    md: { img: "h-12 w-12", text: "text-xl"},
+    lg: { img: "h-14 w-14", text: "text-2xl"},
 }
 
 interface LogoProps {
