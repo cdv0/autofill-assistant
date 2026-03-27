@@ -1,6 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 
-interface InputProps {
+export interface InputProps {
     type: "search" | "text" | "password";
     placeholder: string;
     icon?: LucideIcon;

@@ -4,6 +4,7 @@ import { User, Search } from "lucide-react";
 import Logo from './components/atoms/LogoWithText';
 import Input from './components/atoms/TextInput';
 import NavItem from './components/atoms/NavItem';
+import LabelInput from './components/molecules/LabelInput';
 
 function App() {
 
@@ -27,6 +28,8 @@ function App() {
       <Input placeholder='Type here' type="text" />
 
       <NavItem onClick={() => {}} text='Testing' isDropdown={false} icon={User} style='danger'/>
+
+      <LabelInput labelText='Testing' placeholder='Placeholder' addTrashIcon={true}/>
     </>
   )
 }
