@@ -14,6 +14,9 @@ export default {
         stroke: "#d6d6d6",
         lightBlue: "#d3e1f5",
       },
+      fontFamily: {
+        istok: ['"Istok Web"', 'sans-serif'],
+      },
     },
   },
   plugins: [],
