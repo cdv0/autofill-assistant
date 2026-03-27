@@ -1,6 +1,6 @@
 import "./App.css";
 import bg from "./assets/background.avif";
-import LoginForm from "./components/organisms/AuthForm";
+import Modal from "./components/organisms/Modal";
 
 function App() {
   return (
@@ -15,8 +15,7 @@ function App() {
         
         {/* Content */}
         <div className="flex flex-col gap-6 relative z-10">
-          <LoginForm mode="login"/>
-          <LoginForm mode="signup"/>
+          <Modal name="Health" category="Group" onClick={() => {}}/>
         </div>
       </div>
     </>
