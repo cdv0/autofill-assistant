@@ -2,7 +2,7 @@ import Logo from "../atoms/Logo.tsx";
 import LabelInput from "../molecules/LabelInput.tsx";
 import Button from "../atoms/Button.tsx";
 
-interface AuthFormProps {
+export interface AuthFormProps {
   mode: "login" | "signup";
   onClickSubmit: () => void;
   onSwitchMode: () => void;
@@ -12,7 +12,7 @@ const AuthForm = ({ mode, onClickSubmit, onSwitchMode }: AuthFormProps) => {
   const isLogin = mode === "login"
 
   return (
-    <div className="flex flex-col bg-white rounded-2xl px-6 py-8 max-w-md gap-8 justify-center">
+    <div className="flex flex-col bg-white rounded-2xl px-6 py-8 gap-8 justify-center">
       <Logo size="lg" onClick={() => {}} />
 
       {/* EMAIL INPUT */}

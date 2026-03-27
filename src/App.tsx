@@ -1,7 +1,6 @@
 import "./App.css";
 import bg from "./assets/background.avif";
-import NavBar from "./components/organisms/NavigationBar";
-
+import Auth from "./components/pages/Auth";
 
 function App() {
   return (
@@ -16,7 +15,7 @@ function App() {
         
         {/* Content */}
         <div className="flex flex-col min-h-screen gap-6 relative z-10">
-          <NavBar/>
+          <Auth/>
         </div>
       </div>
     </>
