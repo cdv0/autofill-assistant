@@ -9,8 +9,8 @@ const LabelView = ({
 }: LabelViewProps) => {
     return (
         <div className="flex flex-col gap-1">
-          <p className="font-medium text-base text-darkGray">{label}</p>
-          <p>{value}</p>
+          <p className="text-base text-darkGray">{label}</p>
+          <p className="text-base text-primary font-medium">{value}</p>
         </div>
     )
 }
