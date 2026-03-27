@@ -17,9 +17,9 @@ const GroupRow = ({
                 <p className="font-semibold">{name}</p>
             </div>
 
-            <div className="flex items-center gap-4 justify-center">
+            <div className="flex items-center gap-6 justify-center">
                 <p className="text-darkGray text-sm">{dateModified.toLocaleDateString()}</p>
-                <Trash2 className="w-5 h-5 hover:text-danger transition" />
+                <Trash2 className="w-5 h-5 hover:text-danger transition" strokeWidth={1.5} />
             </div>
         </button>
     )
