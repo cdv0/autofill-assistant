@@ -6,6 +6,7 @@ import Input from './components/atoms/TextInput';
 import NavItem from './components/atoms/NavItem';
 import LabelInput from './components/molecules/LabelInput';
 import ControlBar from './components/molecules/ControlBar';
+import LabelView from './components/molecules/LabelView';
 
 function App() {
 
@@ -36,6 +37,8 @@ function App() {
       <ControlBar mode="editing" onCancel={() => {}} onCreate={() => {}} onDelete={() => {}} onSave={() => {}} onEdit={() => {}}/>
       <ControlBar mode="editOnly" onEdit={() => {}} />
       <ControlBar mode="createOnly" onCreate={() => {}} />
+
+      <LabelView value="Answer" label="Test Label"/>
     </>
   )
 }
