@@ -3,23 +3,23 @@ import type { LucideIcon } from "lucide-react";
 const colorClasses = {
   // FILLED
   primaryFill: "bg-[#2c3e5e] text-white hover:bg-[#354b70]",
-  dangerFill: "bg-[#ba1618] text-white hover:bg-[#d11f21]",
+  dangerFill: "bg-danger text-white hover:bg-[#d11f21]",
 
   // NO FILL (underline on hover)
   primaryNoFill:
-    "bg-transparent text-[#23334A] hover:underline hover:underline-offset-5 hover:decoration-2",
+    "bg-transparent text-[#23334A] hover:underline hover:underline-offset-5 hover:decoration-1",
 
   darkGrayNoFill:
-    "bg-transparent text-[#767676] hover:underline hover:underline-offset-5 hover:decoration-2",
+    "bg-transparent text-darkGray hover:underline hover:underline-offset-5 hover:decoration-1",
 
   dangerNoFill:
-    "bg-transparent text-[#ba1618] hover:underline hover:underline-offset-5 hover:decoration-2",
+    "bg-transparent text-danger hover:underline hover:underline-offset-5 hover:decoration-1",
 
   secondaryNoFill:
-    "bg-transparent text-[#42608B] hover:underline hover:underline-offset-5 hover:decoration-2",
+    "bg-transparent text-secondary hover:underline hover:underline-offset-5 hover:decoration-1",
 
   successNoFill:
-    "bg-transparent text-[#16a34a] hover:underline hover:underline-offset-5 hover:decoration-2",
+    "bg-transparent text-success hover:underline hover:underline-offset-5 hover:decoration-1",
 };
 
 interface ButtonProps {
