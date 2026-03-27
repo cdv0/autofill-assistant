@@ -19,7 +19,7 @@ const ControlBar = ({
     onEdit
 }: ControlBarProps) => {
   return (
-    <div className="flex gap-1">
+    <div className="flex bg-white gap-1 rounded-2xl">
       {mode === "viewing" && (
         <>
           {onCreate && <Button color="primaryNoFillTextBlack" icon={Plus} name="Create" onClick={onCreate} />}
