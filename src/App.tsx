@@ -15,7 +15,7 @@ function App() {
         <div className="absolute inset-0 bg-white/70" />
         
         {/* Content */}
-        <div className="flex flex-col gap-6 relative z-10">
+        <div className="flex flex-col min-h-screen gap-6 relative z-10">
           <NavBar/>
         </div>
       </div>
