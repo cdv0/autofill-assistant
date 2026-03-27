@@ -33,6 +33,7 @@ interface ButtonProps {
   icon?: LucideIcon;
   iconPosition?: "left" | "right";
   strokeWidth?: number;
+  xPadding?: string;
 }
 
 const Button = ({
@@ -42,11 +43,12 @@ const Button = ({
   color = "primaryFill",
   icon: Icon,
   iconPosition = "left",
-  strokeWidth = 2
+  strokeWidth = 2,
+  xPadding = "px-5"
 }: ButtonProps) => {
   return (
     <button
-      className={`btn flex flex-row justify-center items-center gap-2 min-w-min py-2.5 px-5 ${colorClasses[color]} rounded-xl text-sm font-medium w-fit`}
+      className={`btn flex flex-row justify-center items-center gap-2 min-w-min ${xPadding} py-2.5 ${colorClasses[color]} rounded-xl text-sm font-medium w-fit`}
       type={type}
       onClick={onClick}
     >
