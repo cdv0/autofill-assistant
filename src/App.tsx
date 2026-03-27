@@ -1,7 +1,8 @@
 import './App.css'
 import Button from './components/atoms/Button'
-import { User } from "lucide-react";
+import { User, Search } from "lucide-react";
 import Logo from './components/atoms/LogoWithText';
+import Input from './components/atoms/TextInput';
 
 function App() {
 
@@ -20,6 +21,9 @@ function App() {
       <Logo size="sm" onClick={() => {}} text={false}/>
       <Logo size="md" onClick={() => {}}/>
       <Logo size="lg" onClick={() => {}}/>
+
+      <Input placeholder='Search' type='search' icon={Search}/>
+      <Input placeholder='Type here' type="text" />
     </>
   )
 }
