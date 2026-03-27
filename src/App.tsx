@@ -29,7 +29,7 @@ function App() {
 
       <NavItem onClick={() => {}} text='Testing' isDropdown={false} icon={User} style='danger'/>
 
-      <LabelInput labelText='Testing' placeholder='Placeholder' addTrashIcon={true}/>
+      <LabelInput labelText='Testing' placeholder='Placeholder' addTrashIcon={true} type='password'/>
     </>
   )
 }
