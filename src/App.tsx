@@ -26,7 +26,7 @@ function App() {
       <Input placeholder='Search' type='search' icon={Search}/>
       <Input placeholder='Type here' type="text" />
 
-      <NavItem onClick={() => {}} text='Testing' isDropdown={true} />
+      <NavItem onClick={() => {}} text='Testing' isDropdown={false} icon={User} style='danger'/>
     </>
   )
 }

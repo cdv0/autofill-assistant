@@ -8,6 +8,7 @@ export default {
         secondary: "#42608B",
         white: "#ffffff",
         danger: "#ba1618",
+        dangerLight: "f8d7da",
         darkGray: "#767676",
         success: "#16a34a",
         darkStroke: "#aaaaaa",
