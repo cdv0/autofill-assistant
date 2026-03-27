@@ -3,6 +3,7 @@ import Button from './components/atoms/Button'
 import { User, Search } from "lucide-react";
 import Logo from './components/atoms/LogoWithText';
 import Input from './components/atoms/TextInput';
+import NavItem from './components/atoms/NavItem';
 
 function App() {
 
@@ -24,6 +25,8 @@ function App() {
 
       <Input placeholder='Search' type='search' icon={Search}/>
       <Input placeholder='Type here' type="text" />
+
+      <NavItem onClick={() => {}} text='Testing' isDropdown={true} />
     </>
   )
 }
