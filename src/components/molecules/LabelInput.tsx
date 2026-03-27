@@ -4,11 +4,13 @@ import { Trash2 } from "lucide-react";
 interface LabelInputProps extends InputProps {
     labelText: string;
     addTrashIcon?: boolean;
+    showPassword?: boolean;
 }
 
 const LabelInput = ({
     labelText,
     addTrashIcon = false,
+    showPassword = false,
     ...inputProps
 }: LabelInputProps) => {
     return (
@@ -18,7 +20,7 @@ const LabelInput = ({
               {addTrashIcon && <Trash2 className="w-5 h-5 hover:text-danger transition" />}
             </div>
             <Input {...inputProps} />
-            {inputProps.type === "password" && 
+            {showPassword === true &&
               <div className="flex justify-end">
                 <button className="py-1 w-fit">
                   <p className="font-medium text-sm text-secondary hover:text-primary">Forgot password?</p>

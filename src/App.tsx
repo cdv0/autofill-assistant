@@ -1,49 +1,26 @@
-import './App.css'
-import Button from './components/atoms/Button'
-import { User, Search } from "lucide-react";
-import Logo from './components/atoms/LogoWithText';
-import Input from './components/atoms/TextInput';
-import NavItem from './components/atoms/NavItem';
-import LabelInput from './components/molecules/LabelInput';
-import ControlBar from './components/molecules/ControlBar';
-import LabelView from './components/molecules/LabelView';
-import GroupRow from './components/molecules/GroupRow';
+import "./App.css";
+import bg from "./assets/background.avif";
+import LoginForm from "./components/organisms/AuthForm";
 
 function App() {
-
   return (
     <>
-      <Button name="" onClick={() => {}} color="primaryFill" icon={User} strokeWidth={3}></Button>
-      <Button name="Normal Button" onClick={() => {}} color="dangerFill"></Button>
-      <Button name="Normal Button" onClick={() => {}} color="dangerNoFill"></Button>
-      <Button name="Normal Button" onClick={() => {}} color="darkGrayNoFill"></Button>
-      <Button name="Normal Button" onClick={() => {}} color="primaryNoFillTextBlack"></Button>
-      <Button name="Normal Button" onClick={() => {}} color="secondaryNoFill"></Button>
-      <Button name="Normal Button" onClick={() => {}} color="successNoFill"></Button>
-
-      <img src='../src/assets/logo-image.svg' width={24}/>
-
-      <Logo size="sm" onClick={() => {}} text={false}/>
-      <Logo size="md" onClick={() => {}}/>
-      <Logo size="lg" onClick={() => {}}/>
-
-      <Input placeholder='Search' type='search' icon={Search}/>
-      <Input placeholder='Type here' type="text" />
-
-      <NavItem onClick={() => {}} text='Testing' isDropdown={false} icon={User} style='danger'/>
-
-      <LabelInput labelText='Testing' placeholder='Placeholder' addTrashIcon={true} type='password'/>
-
-      <ControlBar mode="viewing" onCreate={() => {}} onDelete={() => {}} onEdit={() => {}}/>
-      <ControlBar mode="editing" onCancel={() => {}} onCreate={() => {}} onDelete={() => {}} onSave={() => {}} onEdit={() => {}}/>
-      <ControlBar mode="editOnly" onEdit={() => {}} />
-      <ControlBar mode="createOnly" onCreate={() => {}} />
-
-      <LabelView value="Answer" label="Test Label"/>
-
-      <GroupRow name="Title name" onClick={() => {}} dateModified={new Date("2026-01-12")}/>
+      {/* Root with background */}
+      <div
+        className="min-h-screen bg-cover bg-center relative"
+        style={{ backgroundImage: `url(${bg})` }}
+      >
+        {/* Background Transparency */}
+        <div className="absolute inset-0 bg-white/70" />
+        
+        {/* Content */}
+        <div className="flex flex-col gap-6 relative z-10">
+          <LoginForm mode="login"/>
+          <LoginForm mode="signup"/>
+        </div>
+      </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
