@@ -7,6 +7,7 @@ import NavItem from './components/atoms/NavItem';
 import LabelInput from './components/molecules/LabelInput';
 import ControlBar from './components/molecules/ControlBar';
 import LabelView from './components/molecules/LabelView';
+import GroupRow from './components/molecules/GroupRow';
 
 function App() {
 
@@ -16,7 +17,7 @@ function App() {
       <Button name="Normal Button" onClick={() => {}} color="dangerFill"></Button>
       <Button name="Normal Button" onClick={() => {}} color="dangerNoFill"></Button>
       <Button name="Normal Button" onClick={() => {}} color="darkGrayNoFill"></Button>
-      <Button name="Normal Button" onClick={() => {}} color="primaryNoFill"></Button>
+      <Button name="Normal Button" onClick={() => {}} color="primaryNoFillTextBlack"></Button>
       <Button name="Normal Button" onClick={() => {}} color="secondaryNoFill"></Button>
       <Button name="Normal Button" onClick={() => {}} color="successNoFill"></Button>
 
@@ -39,6 +40,8 @@ function App() {
       <ControlBar mode="createOnly" onCreate={() => {}} />
 
       <LabelView value="Answer" label="Test Label"/>
+
+      <GroupRow name="Title name" onClick={() => {}} dateModified={new Date("2026-01-12")}/>
     </>
   )
 }
