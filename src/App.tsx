@@ -1,6 +1,7 @@
 import "./App.css";
 import bg from "./assets/background.avif";
-import Shell from "./components/organisms/MainContentShell";
+import NavBar from "./components/organisms/NavigationBar";
+
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         
         {/* Content */}
         <div className="flex flex-col gap-6 relative z-10">
-          <Shell />
+          <NavBar/>
         </div>
       </div>
     </>
