@@ -5,6 +5,7 @@ import Logo from './components/atoms/LogoWithText';
 import Input from './components/atoms/TextInput';
 import NavItem from './components/atoms/NavItem';
 import LabelInput from './components/molecules/LabelInput';
+import ControlBar from './components/molecules/ControlBar';
 
 function App() {
 
@@ -30,6 +31,11 @@ function App() {
       <NavItem onClick={() => {}} text='Testing' isDropdown={false} icon={User} style='danger'/>
 
       <LabelInput labelText='Testing' placeholder='Placeholder' addTrashIcon={true} type='password'/>
+
+      <ControlBar mode="viewing" onCreate={() => {}} onDelete={() => {}} onEdit={() => {}}/>
+      <ControlBar mode="editing" onCancel={() => {}} onCreate={() => {}} onDelete={() => {}} onSave={() => {}} onEdit={() => {}}/>
+      <ControlBar mode="editOnly" onEdit={() => {}} />
+      <ControlBar mode="createOnly" onCreate={() => {}} />
     </>
   )
 }

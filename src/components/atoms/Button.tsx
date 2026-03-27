@@ -6,8 +6,11 @@ const colorClasses = {
   dangerFill: "bg-danger text-white hover:bg-[#d11f21]",
 
   // NO FILL (underline on hover)
-  primaryNoFill:
-    "bg-transparent text-[#23334A] hover:underline hover:underline-offset-5 hover:decoration-1",
+  primaryNoFillTextBlack:
+    "bg-transparent text-black hover:underline hover:underline-offset-5 hover:decoration-1",
+  
+  primaryNoFillTextBlue:
+    "bg-transparent text-primary hover:underline hover:underline-offset-5 hover:decoration-1",
 
   darkGrayNoFill:
     "bg-transparent text-darkGray hover:underline hover:underline-offset-5 hover:decoration-1",
