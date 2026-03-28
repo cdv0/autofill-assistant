@@ -1,7 +1,7 @@
 import Button from "../atoms/Button";
 import LabelInput from "../molecules/LabelInput";
 
-interface GroupEditProps {
+export interface AccountEditProps {
 }
 
 // TODO: Delete dummy data (fields)
@@ -11,7 +11,7 @@ const fields = [
 
 ];
 
-const AccountEdit = ({  }: GroupEditProps) => {
+const AccountEdit = ({  }: AccountEditProps) => {
   return (
     <div className="flex flex-col gap-6">
       {/* TOP BAR */}

@@ -6,7 +6,7 @@ const sizeClasses = {
 
 interface LogoProps {
     size: "sm" | "md" | "lg";
-    onClick: () => void;
+    onClick?: () => void;
     text?: boolean;
 }
 

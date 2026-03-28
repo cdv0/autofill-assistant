@@ -1,8 +1,8 @@
 import Button from "../atoms/Button";
 import { Plus, Pencil, Trash2, CircleX, CircleCheck } from "lucide-react"
 
-interface ControlBarProps {
-    mode: "viewing" | "editing" | "editOnly" | "createOnly";
+export interface ControlBarProps {
+    controlMode: "viewing" | "editing" | "editOnly" | "createOnly";
     onCreate?: () => void;
     onSave?: () => void;
     onDelete?: () => void;
@@ -11,7 +11,7 @@ interface ControlBarProps {
 }
 
 const ControlBar = ({
-    mode,
+    controlMode,
     onCreate,
     onSave,
     onDelete,
@@ -19,8 +19,8 @@ const ControlBar = ({
     onEdit
 }: ControlBarProps) => {
   return (
-    <div className="flex bg-white gap-1 rounded-2xl">
-      {mode === "viewing" && (
+    <div className="flex bg-white gap-1 rounded-2xl border border-stroke py-1.5">
+      {controlMode === "viewing" && (
         <>
           {onCreate && <Button color="primaryNoFillTextBlack" icon={Plus} name="Create" onClick={onCreate} />}
           {onEdit && <Button color="primaryNoFillTextBlue" icon={Pencil} name="Edit" onClick={onEdit} /> }
@@ -28,18 +28,18 @@ const ControlBar = ({
         </>
       )}
 
-      {mode === "editing" && (
+      {controlMode === "editing" && (
         <>
           {onCancel && <Button color="darkGrayNoFill" icon={CircleX} name="Cancel" onClick={onCancel} />}
           {onSave && <Button color="successNoFill" icon={CircleCheck} name="Save" onClick={onSave} />}
         </>
       )}
 
-      {mode === "editOnly" && onEdit && (
+      {controlMode === "editOnly" && onEdit && (
         <Button color="primaryNoFillTextBlue" icon={Pencil} name="Edit" onClick={onEdit} />
       )}
 
-      {mode === "createOnly" && onCreate && (
+      {controlMode === "createOnly" && onCreate && (
         <Button color="primaryNoFillTextBlack" icon={Plus} name="Create" onClick={onCreate} />
       )}
     </div>

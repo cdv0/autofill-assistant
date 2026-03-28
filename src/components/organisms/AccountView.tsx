@@ -1,6 +1,6 @@
 import LabelView from "../molecules/LabelView";
 
-interface AccountViewProps {
+export interface AccountViewProps {
 }
 
 // TODO: Delete dummy data (fields)

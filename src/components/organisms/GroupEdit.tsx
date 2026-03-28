@@ -2,11 +2,11 @@ import Button from "../atoms/Button";
 import LabelInput from "../molecules/LabelInput";
 import { Plus } from "lucide-react";
 
-interface GroupEditProps {
-  groupName: string;
-  onClickBack: () => void;
-  onClickAddField: () => void;
-  onClickTrash: () => void;
+export interface GroupEditProps {
+  groupName?: string;
+  onClickBack?: () => void;
+  onClickAddField?: () => void;
+  onClickTrash?: () => void;
 }
 
 // TODO: Delete dummy data (fields)

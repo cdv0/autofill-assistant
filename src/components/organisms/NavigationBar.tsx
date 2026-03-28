@@ -2,7 +2,7 @@ import NavItem from "../atoms/NavItem";
 import { useState } from "react";
 import { CircleUserRound, LogOut } from "lucide-react";
 
-interface NavProps {
+export interface NavProps {
   onClickAccount: () => void;
   onClickLogOut: () => void;
 }
@@ -18,7 +18,7 @@ const NavBar = ({ onClickAccount, onClickLogOut }: NavProps) => {
   ];
   return (
     
-    <div className="flex flex-col bg-white rounded-2xl border border-stroke p-4 gap-2 justify-between min-h-[calc(100vh)] min-w-64 max-w-80">
+    <div className="flex flex-col bg-white rounded-2xl border border-stroke p-4 gap-2 justify-between min-w-64 max-w-80 h-full">
       {/* TOP SECTION */}
         <div>
           {/* DROPDOWN */}

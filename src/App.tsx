@@ -1,21 +1,33 @@
 import "./App.css";
 import bg from "./assets/background.avif";
-import Auth from "./components/pages/Auth";
+import DashLayout from "./components/templates/DashLayout";
 
 function App() {
   return (
     <>
       {/* Root with background */}
       <div
-        className="min-h-screen bg-cover bg-center relative"
+        className="h-screen bg-cover bg-center relative"
         style={{ backgroundImage: `url(${bg})` }}
       >
         {/* Background Transparency */}
         <div className="absolute inset-0 bg-white/70" />
         
         {/* Content */}
-        <div className="flex flex-col min-h-screen gap-6 relative z-10">
-          <Auth/>
+        <div className="flex flex-col h-screen gap-6 relative z-10">
+          <DashLayout
+            controlMode="viewing"
+            shellMode="groups"
+            onCreate={() => {}}
+            onEdit={() => {}}
+            onDelete={() => {}}
+            onSave={() => {}}
+            onCancel={() => {}}
+            onClickAccount={() => {}}
+            onClickLogOut={() => {}}
+            onClickRow={() => {}}
+            onClickBack={() => {}}
+          />
         </div>
       </div>
     </>

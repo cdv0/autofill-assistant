@@ -1,9 +1,9 @@
 import Button from "../atoms/Button";
 import LabelView from "../molecules/LabelView";
 
-interface GroupViewProps {
-  groupName: string;
-  onClickBack: () => void;
+export interface GroupViewProps {
+  groupName?: string;
+  onClickBack?: () => void;
 }
 
 // TODO: Delete dummy data (fields)

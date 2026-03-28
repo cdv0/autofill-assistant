@@ -4,8 +4,8 @@ import GroupRow from "../molecules/GroupRow";
 import Button from "../atoms/Button";
 
 export interface GroupsProps {
-  onClickRow: () => void;
-  onClickBack: () => void;
+  onClickRow?: () => void;
+  onClickBack?: () => void;
 }
 
 const Groups = ({ onClickRow, onClickBack }: GroupsProps) => {
@@ -21,7 +21,7 @@ const Groups = ({ onClickRow, onClickBack }: GroupsProps) => {
     <div className="flex flex-col rounded-2xl gap-6">
       <div className="flex justify-between">
         <h1 className="font-semibold text-lg text-primary">Groups</h1>
-        <Button color="secondaryNoFill" name="Back" onClick={onClickBack}/>
+        {/* <Button color="secondaryNoFill" name="Back" onClick={onClickBack}/> */}
       </div>
 
       <Input type="search" placeholder="Search" icon={Search}/>
