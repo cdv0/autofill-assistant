@@ -4,6 +4,7 @@ import { Plus } from "lucide-react";
 
 export interface GroupEditProps {
   groupName?: string;
+  onGroupNameChange?: (value: string) => void;
   onClickBack?: () => void;
   onClickAddField?: () => void;
   onClickTrash?: () => void;
@@ -21,13 +22,17 @@ const fields = [
 
 ];
 
-const GroupEdit = ({ groupName, onClickBack, onClickAddField, onClickTrash }: GroupEditProps) => {
+const GroupEdit = ({ groupName, onClickBack, onClickAddField, onClickTrash, onGroupNameChange }: GroupEditProps) => {
   return (
     <div className="flex flex-col gap-6">
       {/* TOP BAR */}
       <div className="flex justify-between">
         <h1 className="font-semibold text-lg text-darkGray">Groups {">"} <span className="text-primary">{groupName}</span></h1>
         <Button color="secondaryNoFill" name="Back" onClick={onClickBack}/>
+      </div>
+
+      <div className="pb-8">
+        <LabelInput labelText="Group name" type="text" placeholder="Enter group name" value={groupName ?? ""} onChange={(e: any) => onGroupNameChange?.(e.target.value)}/>
       </div>
 
       {/* GRID COLUMNS */}

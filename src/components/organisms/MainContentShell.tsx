@@ -1,11 +1,11 @@
 import Groups, { type GroupsProps } from "./Groups";
-import GroupEdit, { type GroupEditProps } from "./GroupEdit";
+import GroupEdit, { type GroupEditProps } from "./GroupEditCreate";
 import GroupView, { type GroupViewProps } from "./GroupView";
 import AccountEdit, { type AccountEditProps } from "./AccountEdit";
 import AccountView, { type AccountViewProps } from "./AccountView";
 
 export interface ShellProps extends GroupsProps, AccountEditProps, AccountViewProps, GroupEditProps, GroupViewProps {
-  shellMode: "groups" | "groupView" | "groupEdit" | "accountView" | "accountEdit";
+  shellMode: "groups" | "groupView" | "groupEditCreate" | "accountView" | "accountEdit";
 }
 
 const Shell = ( { 
@@ -26,7 +26,7 @@ const Shell = ( {
         <GroupView groupName={groupName} onClickBack={onClickBack}/>
       )}
 
-      {shellMode === "groupEdit" && (
+      {shellMode === "groupEditCreate" && (
         <GroupEdit groupName={groupName} onClickBack={onClickBack} onClickAddField={onClickAddField} onClickTrash={onClickTrash} />
       )}
 

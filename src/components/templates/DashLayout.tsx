@@ -30,7 +30,7 @@ const DashLayout = ({
       <div className="flex gap-6 flex-1"> 
 
         {/* Sidebar */}
-        <div className="flex flex-col gap-6 w-64">
+        <div className="flex flex-col gap-2 w-64">
           <Logo size="lg" />
           <NavBar
             onClickAccount={onClickAccount}

@@ -1,6 +1,6 @@
 import "./App.css";
 import bg from "./assets/background.avif";
-import DashLayout from "./components/templates/DashLayout";
+import Dash from "./components/pages/Dash";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         
         {/* Content */}
         <div className="flex flex-col h-screen gap-6 relative z-10">
-          <DashLayout
+          <Dash
             controlMode="viewing"
             shellMode="groups"
             onCreate={() => {}}
