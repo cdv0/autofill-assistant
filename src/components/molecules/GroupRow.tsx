@@ -12,7 +12,7 @@ const GroupRow = ({
     onClick
 }: GroupRowProps) => {
     return (
-        <button className="flex justify-between items-center w-full p-4 bg-white rounded-2xl hover:bg-gray-100 transition" onClick={onClick}>
+        <button className="flex justify-between items-center w-full p-4 bg-white rounded-2xl hover:bg-gray-100 transition cursor-pointer" onClick={onClick}>
             <div>
                 <p className="font-semibold">{name}</p>
             </div>

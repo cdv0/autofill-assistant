@@ -4,19 +4,19 @@ const sizeClasses = {
     lg: { img: "h-14 w-14", text: "text-2xl"},
 }
 
-interface LogoProps {
-    size: "sm" | "md" | "lg";
-    onClick?: () => void;
+export interface LogoProps {
+    size?: "sm" | "md" | "lg";
+    onClickLogo?: () => void;
     text?: boolean;
 }
 
 const Logo = ({
     size = "md",
-    onClick,
+    onClickLogo,
     text = true
 }: LogoProps) => {
     return (
-        <button onClick={onClick} className="flex justify-center items-center gap-2 p-2">
+        <button onClick={onClickLogo} className="flex justify-center items-center gap-2 p-2 cursor-pointer">
             <img src="../src/assets/logo-image.svg" className={sizeClasses[size].img} />
             {text && <p className={`font-istok font-bold ${sizeClasses[size].text}`}>Auto Fill AI</p>}
         </button>

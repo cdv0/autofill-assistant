@@ -27,7 +27,7 @@ const NavItem = ({
     isOpen,
 }: NavProps) => {
     return (
-        <button className={`flex justify-between items-center py-2 px-4 w-full rounded-xl ${styleClasses[style].hover} ${styleClasses[style].text} transition ${className}`} onClick={onClick}>
+        <button className={`flex justify-between items-center py-2 px-4 w-full rounded-xl ${styleClasses[style].hover} ${styleClasses[style].text} transition ${className} cursor-pointer`} onClick={onClick}>
             <div className="flex justify-center items-center gap-2">
                 {Icon && <Icon className="w-5 h-5" />}
                 <p className={`font-semibold`}>{text}</p>

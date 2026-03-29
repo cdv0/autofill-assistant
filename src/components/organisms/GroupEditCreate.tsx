@@ -8,6 +8,7 @@ export interface GroupEditProps {
   onClickBack?: () => void;
   onClickAddField?: () => void;
   onClickTrash?: () => void;
+  context?: "groups" | "account"; // Knows which to edit
 }
 
 // TODO: Delete dummy data (fields)
@@ -22,7 +23,7 @@ const fields = [
 
 ];
 
-const GroupEdit = ({ groupName, onClickBack, onClickAddField, onClickTrash, onGroupNameChange }: GroupEditProps) => {
+const GroupEdit = ({ groupName, onClickBack, onClickAddField, onClickTrash, onGroupNameChange, context }: GroupEditProps) => {
   return (
     <div className="flex flex-col gap-6">
       {/* TOP BAR */}
@@ -31,9 +32,11 @@ const GroupEdit = ({ groupName, onClickBack, onClickAddField, onClickTrash, onGr
         <Button color="secondaryNoFill" name="Back" onClick={onClickBack}/>
       </div>
 
-      <div className="pb-8">
-        <LabelInput labelText="Group name" type="text" placeholder="Enter group name" value={groupName ?? ""} onChange={(e: any) => onGroupNameChange?.(e.target.value)}/>
-      </div>
+      {context === "groups" && (
+        <div className="pb-8">
+          <LabelInput labelText="Group name" type="text" placeholder="Enter group name" value={groupName ?? ""} onChange={(e: any) => onGroupNameChange?.(e.target.value)}/>
+        </div>
+      )}
 
       {/* GRID COLUMNS */}
       <div className="grid grid-cols-2 gap-x-12 gap-y-8">
@@ -42,9 +45,11 @@ const GroupEdit = ({ groupName, onClickBack, onClickAddField, onClickTrash, onGr
         ))}
 
         {/* ADD NEW FIELD BUTTON */}
-        <div className="pt-7">
-          <Button color="darkGrayNoFill" name="Add new field" icon={Plus} onClick={onClickAddField}/>
-        </div>
+        {context === "groups" && (
+          <div className="pt-7">
+            <Button color="darkGrayNoFill" name="Add new field" icon={Plus} onClick={onClickAddField}/>
+          </div>
+        )}
       </div>
     </div>
   );

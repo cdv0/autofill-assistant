@@ -11,7 +11,7 @@ const Modal = ({
   name,
   category,
   onClickCancel,
-  onClickDelete
+  onClickDelete,
 }: ModalProps) => {
   return (
     <div className="flex flex-col bg-white rounded-2xl border border-stroke py-4 px-6 max-w-md gap-1">

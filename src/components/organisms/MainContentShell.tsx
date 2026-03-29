@@ -15,6 +15,7 @@ const Shell = ( {
   groupName,
   onClickAddField,
   onClickTrash,
+  context
  }: ShellProps) => {
   return (
     <div className={`bg-white py-4 px-6 pb-8 border border-stroke rounded-2xl flex-1 min-h-0 overflow-y-auto`}>
@@ -27,7 +28,7 @@ const Shell = ( {
       )}
 
       {shellMode === "groupEditCreate" && (
-        <GroupEdit groupName={groupName} onClickBack={onClickBack} onClickAddField={onClickAddField} onClickTrash={onClickTrash} />
+        <GroupEdit groupName={groupName} onClickBack={onClickBack} onClickAddField={onClickAddField} onClickTrash={onClickTrash} context={context} />
       )}
 
       {shellMode === "accountView" && (

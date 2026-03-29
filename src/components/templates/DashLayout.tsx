@@ -2,9 +2,9 @@
 import NavBar, { type NavProps } from "../organisms/NavigationBar";
 import Shell, { type ShellProps } from "../organisms/MainContentShell";
 import ControlBar, { type ControlBarProps } from "../molecules/ControlBar";
-import Logo from "../atoms/Logo";
+import Logo, { type LogoProps } from "../atoms/Logo";
 
-interface DashLayoutProps extends ControlBarProps, NavProps, ShellProps {}
+interface DashLayoutProps extends ControlBarProps, NavProps, ShellProps, LogoProps {}
 
 const DashLayout = ({
   // NavBar props
@@ -24,6 +24,8 @@ const DashLayout = ({
   groupName,
   onClickAddField,
   onClickTrash,
+  // Logo props
+  onClickLogo,
 }: DashLayoutProps) => {
   return (
     <div className="min-h-screen w-full p-6 flex flex-col">
@@ -31,7 +33,7 @@ const DashLayout = ({
 
         {/* Sidebar */}
         <div className="flex flex-col gap-2 w-64">
-          <Logo size="lg" />
+          <Logo size="lg" onClickLogo={onClickLogo}/>
           <NavBar
             onClickAccount={onClickAccount}
             onClickLogOut={onClickLogOut}

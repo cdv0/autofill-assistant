@@ -4,7 +4,7 @@ import GroupRow from "../molecules/GroupRow";
 import Button from "../atoms/Button";
 
 export interface GroupsProps {
-  onClickRow?: () => void;
+  onClickRow?: (name: string) => void;
   onClickBack?: () => void;
 }
 

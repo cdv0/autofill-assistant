@@ -48,7 +48,7 @@ const Button = ({
 }: ButtonProps) => {
   return (
     <button
-      className={`btn flex flex-row justify-center items-center gap-2 min-w-min ${xPadding} py-2.5 ${colorClasses[color]} rounded-xl text-sm font-medium w-fit`}
+      className={`btn flex flex-row justify-center items-center gap-2 min-w-min ${xPadding} py-2.5 ${colorClasses[color]} rounded-xl text-sm font-medium w-fit cursor-pointer`}
       type={type}
       onClick={onClick}
     >
