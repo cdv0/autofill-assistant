@@ -28,7 +28,7 @@ const Groups = ({ onClickRow, onClickBack }: GroupsProps) => {
 
       {/* GROUP ROWS AND LABELS */}
       {/* LABELS */}
-      <div className="flex justify-between pr-12">
+      <div className="flex justify-between">
         <p className="text-sm text-primary font-semibold">Group name</p>
         <p className="text-sm text-primary font-semibold">Last modified</p>
       </div>

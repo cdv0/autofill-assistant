@@ -34,6 +34,7 @@ const Dash = () => {
 
         // ControlBar
         controlMode={controlMode}
+        onDelete={() => setShowModal(true)}
         onCreate={() => {
           setShellMode("groupEditCreate");
           setControlMode("editing");

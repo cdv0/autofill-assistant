@@ -32,7 +32,7 @@ const NavBar = ({ onClickAccount, onClickLogOut }: NavProps) => {
             <div className="flex flex-col gap-2 pt-1">
               {toggle && 
                 fields.map((field) => (
-                  <NavItem key={field.id} text={field.label} onClick={field.onClick} style="lightGray"/>
+                  <NavItem key={field.id} text={field.label} onClick={field.onClick} style="lightGray" textSize="text-sm" className="py-3"/>
                 ))
               }
             </div>
