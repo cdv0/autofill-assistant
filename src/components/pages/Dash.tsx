@@ -1,30 +1,40 @@
 import DashLayout from "../templates/DashLayout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../organisms/Modal";
 import { supabase } from "../../lib/supabaseClient";
 import { useNavigate } from "react-router-dom";
 
 const Dash = () => {
-  {/* States */}
+  const navigate = useNavigate();
+
   const [shellMode, setShellMode] = useState<"groups" | "groupView" | "groupEditCreate" | "accountView" | "accountEdit">("groups");
   const [controlMode, setControlMode] = useState<"viewing" | "editing" | "editOnly" | "createOnly">("createOnly");
   const [groupName, setGroupName] = useState<string | undefined>(undefined);
   const [showModal, setShowModal] = useState(false);
   const [context, setContext] = useState<"groups" | "account">("groups");
   const [isCreating, setIsCreating] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data } = await supabase.auth.getUser();
 
-  {/* Functions */}
-  const handleLogOut = async () => {
-    const {error} = await supabase.auth.signOut()
+      if (!data.user) {
+        navigate("/");
+      } else {
+        setLoading(false);
+      }
+    };
 
-    if (error) {
-      console.error(error);
-      return;
-    }
+    checkUser();
+  }, [navigate]);
 
-    navigate("/");
+  if (loading) {
+    return (
+      <div className="min-h-screen w-full flex justify-center items-center">
+        <p>Loading...</p>
+      </div>
+    );
   }
 
   return (
@@ -34,6 +44,7 @@ const Dash = () => {
         onClickLogo={() => {
           setShellMode("groups");
           setControlMode("createOnly");
+          setContext("groups");
         }}
 
         // Shell
@@ -41,13 +52,17 @@ const Dash = () => {
         onClickRow={(name) => {
           setGroupName(name);
           setShellMode("groupView");
+          setControlMode("viewing");
           setContext("groups");
         }}
-        onClickBack={() => setShellMode("groups")}
+        onClickBack={() => {
+          setShellMode("groups");
+          setControlMode("createOnly");
+          setContext("groups");
+        }}
         groupName={groupName}
         onClickAddField={() => {}}
         onClickTrash={() => {}} // TODO: add delete trash logic backend
-        context={context}
 
         // ControlBar
         controlMode={controlMode}
@@ -59,8 +74,13 @@ const Dash = () => {
           setIsCreating(true);
         }}
         onEdit={() => {
-          setShellMode("groupEditCreate");
-          setControlMode("editing");
+          if (context === "account") {
+            setShellMode("accountEdit");
+            setControlMode("editing");
+          } else {
+            setShellMode("groupEditCreate");
+            setControlMode("editing");
+          }
           setIsCreating(false);
         }}
         onSave={() => {
@@ -88,7 +108,10 @@ const Dash = () => {
           setControlMode("editOnly");
           setContext("account");
         }}
-        onClickLogOut={handleLogOut}
+        onClickLogOut={async () => {
+          await supabase.auth.signOut();
+          navigate("/");
+        }}
       />
 
 
