@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
   // States 
-  const [mode, setMode] = useState<"login" | "signup">("login")
+  const [mode, setMode] = useState<"login" | "signup" | "forgotPassword">("login")
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -17,6 +17,35 @@ const Auth = () => {
   // Helper functions
   const handleSubmit = async () => {
     setMessage("");
+
+    if (mode === "forgotPassword") {
+      if (!email) {
+        setMessage("Please fill out your email.");
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: "http://localhost:5175/reset-password"
+        });
+
+        if (error) {
+          setMessage(error.message)
+          throw error
+        } else {
+          setMessage("Confirmation sent to email")
+        }
+      } catch (err: any) {
+        console.log("Error message: ", err)
+        setMessage(err.message)
+      } finally {
+        setLoading(false);
+      }
+
+      return;
+    }
 
     if (!email || !password) {
       setMessage("Please fill out your email and password.");
@@ -66,6 +95,11 @@ const Auth = () => {
           password
         });
 
+        console.log("LOGIN email:", JSON.stringify(email));
+        console.log("LOGIN password:", JSON.stringify(password));
+        console.log("LOGIN data:", data);
+        console.log("LOGIN error:", error);
+
         if (error) {
           setMessage(error.message)
           throw error
@@ -93,6 +127,8 @@ const Auth = () => {
           onSwitchMode={() => {
             setMode(prev => prev === "login" ? "signup" : "login");
             setMessage("");
+            setPassword("");
+            setConfirmPassword("");
           }}
 
           email={email}
@@ -103,6 +139,18 @@ const Auth = () => {
           onChangeEmail={setEmail}
           onChangePassword={setPassword}
           onChangeConfirmPassword={setConfirmPassword}
+          onForgotPassword={() => {
+            setMode("forgotPassword");
+            setMessage("");
+            setPassword("");
+            setConfirmPassword("");
+          }}
+          onClickCancelForgotPassword={() => {
+            setMode("login");
+            setMessage("")
+            setPassword("");
+            setConfirmPassword("");
+          }}
         />
       </div>
     </div>

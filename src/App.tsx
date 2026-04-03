@@ -3,6 +3,7 @@ import bg from "./assets/background.avif";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Dash from "./components/pages/Dash";
 import Auth from "./components/pages/Auth";
+import ResetPassword from "./components/pages/ResetPassword";
 
 function App() {
   return (
@@ -22,22 +23,10 @@ function App() {
             <Route path="/" element={<Auth />} />
 
             {/* DASHBOARD PAGE */}
-            <Route path="/dash" element={
-                <Dash
-                  controlMode="viewing"
-                  shellMode="groups"
-                  onCreate={() => {}}
-                  onEdit={() => {}}
-                  onDelete={() => {}}
-                  onSave={() => {}}
-                  onCancel={() => {}}
-                  onClickAccount={() => {}}
-                  onClickLogOut={() => {}}
-                  onClickRow={() => {}}
-                  onClickBack={() => {}}
-                />
-              }
-            />
+            <Route path="/dash" element={<Dash />} />
+
+            {/*  RESET PASSWORD */}
+            <Route path="/reset-password" element={<ResetPassword />} />
 
             {/* fallback for unknown routes */}
             <Route path="*" element={<Navigate to="/" replace />} />
