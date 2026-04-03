@@ -19,7 +19,13 @@ const Input = ({
         <div className="flex items-center gap-2 border border-stroke hover:border-darkGray px-3 py-2 rounded-xl">
             {Icon && <Icon className="w-4 h-4 text-darkStroke"/>}
             
-            <input type={type} placeholder={placeholder} className="outline-none w-full" value={value} onChange={onChange} />
+            <input 
+              type={type} 
+              placeholder={placeholder} 
+              className="outline-none w-full" 
+              value={value} 
+              onChange={onChange} 
+            />
         </div>
     )
 }

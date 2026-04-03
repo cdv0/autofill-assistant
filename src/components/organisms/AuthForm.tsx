@@ -6,9 +6,31 @@ export interface AuthFormProps {
   mode: "login" | "signup";
   onClickSubmit: () => void;
   onSwitchMode: () => void;
+
+  email: string;
+  password: string;
+  confirmPassword: string;
+  loading: boolean;
+  message: string;
+  onChangeEmail: (value: string) => void;
+  onChangePassword: (value: string) => void;
+  onChangeConfirmPassword: (value: string) => void;
+
 }
 
-const AuthForm = ({ mode, onClickSubmit, onSwitchMode }: AuthFormProps) => {
+const AuthForm = ({ 
+  mode,
+  email,
+  password,
+  confirmPassword,
+  loading,
+  message,
+  onChangeEmail,
+  onChangePassword,
+  onChangeConfirmPassword,
+  onClickSubmit,
+  onSwitchMode,
+ }: AuthFormProps) => {
   const isLogin = mode === "login"
 
   return (
@@ -16,23 +38,54 @@ const AuthForm = ({ mode, onClickSubmit, onSwitchMode }: AuthFormProps) => {
       <Logo size="lg" onClick={() => {}} />
 
       {/* EMAIL INPUT */}
-      <LabelInput labelText="Email" type="text" placeholder="example@gmail.com"/>
+      <LabelInput 
+        labelText="Email" 
+        type="text" 
+        placeholder="example@gmail.com"
+        value={email}
+        onChange={(e) => onChangeEmail(e.target.value)}
+      />
 
       {/* PASSWORD INPUT */}
-      <LabelInput labelText="Password" type="password" placeholder="Enter password" showPassword={isLogin}/>
+      <LabelInput 
+        labelText="Password" 
+        type="password" 
+        placeholder="Enter password" 
+        showPassword={isLogin}
+        value={password}
+        onChange={(e) => onChangePassword(e.target.value)}
+      />
 
       {/* CONFIRM PASSWORD INPUT */}
-      {!isLogin && <LabelInput labelText="Confirm password" type="password" placeholder="Confirm password"/>}
+      {!isLogin && 
+        <LabelInput 
+          labelText="Confirm password" 
+          type="password" 
+          placeholder="Confirm password"
+          value={confirmPassword}
+          onChange={(e) => onChangeConfirmPassword(e.target.value)}
+        />}
+
+      {message !== "" && <p className={`text-sm w-full text-center ${loading ? "text-success" : "text-danger"}`}>{message}</p>}
 
       {/* SUBMIT BUTTON */}
       <div className="flex w-full justify-center">
-        <Button name={isLogin? "Log in" : "Sign up"} onClick={onClickSubmit} xPadding="px-8"/>
+        <Button 
+          name={isLogin? "Log in" : "Sign up"} 
+          onClick={onClickSubmit} 
+          xPadding="px-8"
+        />
       </div>
 
       {/* SWITCH TO SIGNUP/LOGIN */}
       <div className="flex w-full justify-center items-center">
         <p className="text-secondary font">{isLogin? "Don't have an account? " : "Have an account? "}</p>
-        <Button name={isLogin? "Sign up" : "Log in"} color="primaryNoFillTextBlue" onClick={onSwitchMode} xPadding="px-1.5"/>
+        <Button 
+          name={isLogin? "Sign up" : "Log in"} 
+          color="primaryNoFillTextBlue" 
+          onClick={onSwitchMode}
+          xPadding="px-1.5"
+        />
       </div>
     </div>
   );
