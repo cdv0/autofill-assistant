@@ -51,6 +51,7 @@ const Auth = () => {
         });
 
         if (error) {
+          setMessage(error.message)
           throw error
         } else {
           navigate("/dash");
@@ -66,6 +67,7 @@ const Auth = () => {
         });
 
         if (error) {
+          setMessage(error.message)
           throw error
         } else {
           navigate("/dash");
@@ -76,7 +78,7 @@ const Auth = () => {
       }
     } catch (err: any) {
       console.log("Error message: ", err)
-      setMessage("Something went wrong. Try again.")
+      setMessage(err.message)
     } finally {
       setLoading(false);
     }
