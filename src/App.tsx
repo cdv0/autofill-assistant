@@ -2,7 +2,7 @@ import "./App.css";
 import bg from "./assets/background.avif";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Dash from "./components/pages/Dash";
-import Auth from "./components/templates/Auth";
+import Auth from "./components/pages/Auth";
 
 function App() {
   return (

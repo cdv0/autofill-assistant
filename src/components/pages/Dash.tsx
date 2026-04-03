@@ -1,14 +1,31 @@
 import DashLayout from "../templates/DashLayout";
 import { useState } from "react";
 import Modal from "../organisms/Modal";
+import { supabase } from "../../lib/supabaseClient";
+import { useNavigate } from "react-router-dom";
 
 const Dash = () => {
+  {/* States */}
   const [shellMode, setShellMode] = useState<"groups" | "groupView" | "groupEditCreate" | "accountView" | "accountEdit">("groups");
   const [controlMode, setControlMode] = useState<"viewing" | "editing" | "editOnly" | "createOnly">("createOnly");
   const [groupName, setGroupName] = useState<string | undefined>(undefined);
   const [showModal, setShowModal] = useState(false);
   const [context, setContext] = useState<"groups" | "account">("groups");
   const [isCreating, setIsCreating] = useState(false);
+
+  const navigate = useNavigate();
+
+  {/* Functions */}
+  const handleLogOut = async () => {
+    const {error} = await supabase.auth.signOut()
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    navigate("/");
+  }
 
   return (
     <>
@@ -71,7 +88,7 @@ const Dash = () => {
           setControlMode("editOnly");
           setContext("account");
         }}
-        onClickLogOut={() => {}} // TODO: Add logic
+        onClickLogOut={handleLogOut}
       />
 
 
