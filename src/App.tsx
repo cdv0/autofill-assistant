@@ -1,6 +1,7 @@
 import "./App.css";
 import bg from "./assets/background.avif";
 import Dash from "./components/pages/Dash";
+import Auth from "./components/pages/Auth";
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
             onClickRow={() => {}}
             onClickBack={() => {}}
           />
+
+            {/* <Auth /> */}
         </div>
       </div>
     </>
