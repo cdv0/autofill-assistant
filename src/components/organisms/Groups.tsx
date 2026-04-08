@@ -3,20 +3,15 @@ import { Search } from "lucide-react"
 import GroupRow from "../molecules/GroupRow";
 import { useEffect, useState } from "react";
 import { fetchAllGroups } from "../../services/groupService";
+import { type GroupData } from "./GroupView";
 
 export interface GroupsProps {
   onClickRow: (id: string) => void;
   onClickBack?: () => void;
 }
 
-type Group = {
-  group_id: string;
-  name: string;
-  last_modified: string;
-}
-
 const Groups = ({ onClickRow, onClickBack }: GroupsProps) => {
-  const [groups, setGroups] = useState<Group[]>([]);
+  const [groups, setGroups] = useState<GroupData[]>([]);
 
   useEffect(() => {
     const loadGroups = async () => {
@@ -31,7 +26,7 @@ const Groups = ({ onClickRow, onClickBack }: GroupsProps) => {
   return (
     <div className="flex flex-col rounded-2xl gap-6">
       <div className="flex justify-between">
-        <h1 className="font-semibold text-lg text-primary">Groups</h1>
+        <h1 className="font-medium text-lg text-primary">Groups</h1>
         {/* <Button color="secondaryNoFill" name="Back" onClick={onClickBack}/> */}
       </div>
 

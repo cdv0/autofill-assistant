@@ -24,6 +24,7 @@ const DashLayout = ({
   groupId,
   onClickAddField,
   onClickTrash,
+  context,
   // Logo props
   onClickLogo,
 }: DashLayoutProps) => {
@@ -58,6 +59,7 @@ const DashLayout = ({
             groupId={groupId}
             onClickAddField={onClickAddField}
             onClickTrash={onClickTrash}
+            context={context}
           />
         </div>
 

@@ -13,7 +13,6 @@ const Shell = ( {
   onClickRow,
   onClickBack,
   groupId,
-  onClickAddField,
   onClickTrash,
   context
  }: ShellProps) => {
@@ -28,7 +27,7 @@ const Shell = ( {
       )}
 
       {shellMode === "groupEditCreate" && (
-        <GroupEdit groupId={groupId} onClickBack={onClickBack} onClickAddField={onClickAddField} onClickTrash={onClickTrash} context={context} />
+        <GroupEdit groupId={groupId} onClickBack={onClickBack} onClickTrash={onClickTrash} context={context} />
       )}
 
       {shellMode === "accountView" && (

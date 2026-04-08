@@ -88,6 +88,7 @@ const Dash = () => {
         onClickLogo={goToGroups}
 
         // Shell
+        context={context}
         shellMode={shellMode}
         onClickRow={(id) => {
           setGroupId(id);

@@ -8,13 +8,13 @@ export interface GroupViewProps {
   onClickBack?: () => void;
 }
 
-type GroupData = {
+export type GroupData = {
   group_id: string;
   name: string;
   last_modified: string;
 }
 
-type GroupField = {
+export type GroupField = {
   fields_id: string;
   group_id: string;
   label: string;
