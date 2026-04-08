@@ -110,3 +110,25 @@ export const deleteGroup = async (group_id: string) => {
 
   return data;
 }
+
+// GROUP FIELDS: Fetch all related group fields
+export const fetchRelatedGroupFields = async (group_id: string) => {
+  const { data: userData } = await supabase.auth.getUser();
+
+  if (!userData.user) {
+    console.log("No user found.");
+    return;
+  }
+
+  const { data, error } = await supabase
+    .from("group_fields")
+    .select("*")
+    .eq("group_id", group_id)
+    .order("position", { ascending: true });
+
+  console.log("group_id passed in:", group_id);
+  console.log("Related Group Fields: ", data);
+  console.log("Error: ", error);
+
+  return data;
+}

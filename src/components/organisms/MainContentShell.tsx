@@ -12,7 +12,7 @@ const Shell = ( {
   shellMode,
   onClickRow,
   onClickBack,
-  groupName,
+  groupId,
   onClickAddField,
   onClickTrash,
   context
@@ -24,11 +24,11 @@ const Shell = ( {
       )}
 
       {shellMode === "groupView" && (
-        <GroupView groupName={groupName} onClickBack={onClickBack}/>
+        <GroupView groupId={groupId} onClickBack={onClickBack}/>
       )}
 
       {shellMode === "groupEditCreate" && (
-        <GroupEdit groupName={groupName} onClickBack={onClickBack} onClickAddField={onClickAddField} onClickTrash={onClickTrash} context={context} />
+        <GroupEdit groupId={groupId} onClickBack={onClickBack} onClickAddField={onClickAddField} onClickTrash={onClickTrash} context={context} />
       )}
 
       {shellMode === "accountView" && (

@@ -22,7 +22,7 @@ const ControlBar = ({
     <div className="flex bg-white gap-1 rounded-2xl border border-stroke py-1.5">
       {controlMode === "viewing" && (
         <>
-          {onCreate && <Button color="primaryNoFillTextBlack" icon={Plus} name="Create" onClick={onCreate} />}
+          {/* {onCreate && <Button color="primaryNoFillTextBlack" icon={Plus} name="Create" onClick={onCreate} />} */}
           {onEdit && <Button color="primaryNoFillTextBlue" icon={Pencil} name="Edit" onClick={onEdit} /> }
           {onDelete && <Button color="dangerNoFill" icon={Trash2} name="Delete" onClick={onDelete} /> }
         </>

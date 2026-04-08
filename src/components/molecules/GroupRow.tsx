@@ -1,18 +1,21 @@
-import { Trash2 } from "lucide-react";
+// import { Trash2 } from "lucide-react";
 
-interface GroupRowProps {
+export interface GroupRowProps {
     name: string;
     dateModified: Date;
-    onClick: () => void;
+    onClickRow: () => void;
 }
 
 const GroupRow = ({
     name,
     dateModified,
-    onClick
+    onClickRow
 }: GroupRowProps) => {
     return (
-        <button className="flex justify-between items-center w-full p-4 bg-white rounded-2xl hover:bg-gray-100 transition cursor-pointer" onClick={onClick}>
+        <button 
+          className="flex justify-between items-center w-full p-4 bg-white rounded-2xl hover:bg-gray-100 transition cursor-pointer" 
+          onClick={onClickRow}
+        >
             <div>
                 <p className="font-semibold">{name}</p>
             </div>

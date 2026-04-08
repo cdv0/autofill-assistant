@@ -10,6 +10,7 @@ const Dash = () => {
   const [shellMode, setShellMode] = useState<"groups" | "groupView" | "groupEditCreate" | "accountView" | "accountEdit">("groups");
   const [controlMode, setControlMode] = useState<"viewing" | "editing" | "editOnly" | "createOnly">("createOnly");
   const [groupName, setGroupName] = useState<string | undefined>(undefined);
+  const [groupId, setGroupId] = useState<string | undefined>(undefined);
   const [showModal, setShowModal] = useState(false);
   const [context, setContext] = useState<"groups" | "account">("groups");
   const [isCreating, setIsCreating] = useState(false);
@@ -88,11 +89,13 @@ const Dash = () => {
 
         // Shell
         shellMode={shellMode}
-        onClickRow={(name) => {
-          goToGroupView(name);
+        onClickRow={(id) => {
+          setGroupId(id);
+          goToGroupView(id);
         }}
         onClickBack={goToGroups}
         groupName={groupName}
+        groupId={groupId}
         onClickAddField={() => {}}
         onClickTrash={() => {}} // TODO: add delete trash logic backend
 

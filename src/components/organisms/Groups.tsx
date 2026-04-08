@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { fetchAllGroups } from "../../services/groupService";
 
 export interface GroupsProps {
-  onClickRow?: (name: string) => void;
+  onClickRow: (id: string) => void;
   onClickBack?: () => void;
 }
 
@@ -51,7 +51,7 @@ const Groups = ({ onClickRow, onClickBack }: GroupsProps) => {
             <GroupRow
               name={group.name}
               dateModified={new Date(group.last_modified)}
-              onClick={onClickRow}
+              onClickRow={() => onClickRow?.(group.group_id)}
             />
           </div>
         ))}

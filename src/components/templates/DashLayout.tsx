@@ -21,7 +21,7 @@ const DashLayout = ({
   onClickRow,
   onClickBack,
   shellMode,
-  groupName,
+  groupId,
   onClickAddField,
   onClickTrash,
   // Logo props
@@ -55,7 +55,7 @@ const DashLayout = ({
             shellMode={shellMode}
             onClickRow={onClickRow}
             onClickBack={onClickBack}
-            groupName={groupName}
+            groupId={groupId}
             onClickAddField={onClickAddField}
             onClickTrash={onClickTrash}
           />
