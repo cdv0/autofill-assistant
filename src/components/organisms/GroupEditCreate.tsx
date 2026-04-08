@@ -1,7 +1,8 @@
 import Button from "../atoms/Button";
 import LabelInput from "../molecules/LabelInput";
 import { Plus } from "lucide-react";
-import { fetchGroup, fetchRelatedGroupFields } from "../../services/groupService";
+import { fetchGroup } from "../../services/groupService"
+import { fetchRelatedGroupFields } from "../../services/groupFieldService";
 import { type GroupData, type GroupField } from "./GroupView";
 import { useState, useEffect } from "react";
 

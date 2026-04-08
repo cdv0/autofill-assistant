@@ -1,7 +1,8 @@
 import Button from "../atoms/Button";
 import LabelView from "../molecules/LabelView";
 import { useEffect, useState } from "react";
-import { fetchGroup, fetchRelatedGroupFields } from "../../services/groupService";
+import { fetchGroup } from "../../services/groupService"
+import { fetchRelatedGroupFields } from "../../services/groupFieldService";
 
 export interface GroupViewProps {
   groupId: string;
