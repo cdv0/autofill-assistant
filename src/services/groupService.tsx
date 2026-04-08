@@ -36,10 +36,7 @@ export const fetchAllGroups = async () => {
 
   const { data, error } = await supabase
     .from("groups")
-    .select(`
-      group_id,
-      name
-    `)
+    .select("group_id,name,last_modified")
     .eq("user_id", userData.user.id)
     .order("name", { ascending: true });
     

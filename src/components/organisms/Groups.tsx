@@ -1,21 +1,32 @@
 import Input from "../atoms/TextInput";
 import { Search } from "lucide-react"
 import GroupRow from "../molecules/GroupRow";
-import Button from "../atoms/Button";
+import { useEffect, useState } from "react";
+import { fetchAllGroups } from "../../services/groupService";
 
 export interface GroupsProps {
   onClickRow?: (name: string) => void;
   onClickBack?: () => void;
 }
 
+type Group = {
+  group_id: string;
+  name: string;
+  last_modified: string;
+}
+
 const Groups = ({ onClickRow, onClickBack }: GroupsProps) => {
-  // TODO: Delete dummy data
-  const dummyGroups = [
-    { id: 1, name: "Title1", dateModified: new Date("2026-12-08") },
-    { id: 2, name: "Title2", dateModified: new Date("2026-12-08") },
-    { id: 3, name: "Title3", dateModified: new Date("2026-12-08") },
-    { id: 4, name: "Title4", dateModified: new Date("2026-12-08") },
-  ];
+  const [groups, setGroups] = useState<Group[]>([]);
+
+  useEffect(() => {
+    const loadGroups = async () => {
+      const data = await fetchAllGroups();
+      console.log(data);
+      setGroups(data ?? []);
+    };
+
+    loadGroups();
+  }, []);
 
   return (
     <div className="flex flex-col rounded-2xl gap-6">
@@ -35,11 +46,11 @@ const Groups = ({ onClickRow, onClickBack }: GroupsProps) => {
 
       {/* ROWS */}
       <div className="flex flex-col">
-        {dummyGroups.map((group) => (
-          <div key={group.id} className="border-b border-stroke py-3">
+        {groups.map((group) => (
+          <div key={group.group_id} className="border-b border-stroke py-3">
             <GroupRow
               name={group.name}
-              dateModified={group.dateModified}
+              dateModified={new Date(group.last_modified)}
               onClick={onClickRow}
             />
           </div>

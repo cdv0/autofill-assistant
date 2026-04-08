@@ -1,6 +1,7 @@
 import Button from "../atoms/Button";
 import LabelInput from "../molecules/LabelInput";
 import { Plus } from "lucide-react";
+import { fetchAllGroups } from "../../services/groupService";
 
 export interface GroupEditProps {
   groupName?: string;

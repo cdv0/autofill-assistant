@@ -15,6 +15,49 @@ const Dash = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  const goToGroups = () => {
+    setShellMode("groups");
+    setControlMode("createOnly");
+    setContext("groups");
+    setIsCreating(false);
+  };
+
+  const goToGroupView = (name?: string) => {
+    setGroupName(name);
+    setShellMode("groupView");
+    setControlMode("viewing");
+    setContext("groups");
+    setIsCreating(false);
+  };
+
+  const goToGroupCreate = () => {
+    setShellMode("groupEditCreate");
+    setControlMode("editing");
+    setContext("groups");
+    setIsCreating(true);
+  };
+
+  const goToGroupEdit = () => {
+    setShellMode("groupEditCreate");
+    setControlMode("editing");
+    setContext("groups");
+    setIsCreating(false);
+  };
+
+  const goToAccountView = () => {
+    setShellMode("accountView");
+    setControlMode("editOnly");
+    setContext("account");
+    setIsCreating(false);
+  };
+
+  const goToAccountEdit = () => {
+    setShellMode("accountEdit");
+    setControlMode("editing");
+    setContext("account");
+    setIsCreating(false);
+  };
+
   useEffect(() => {
     const checkUser = async () => {
       const { data } = await supabase.auth.getUser();
@@ -41,25 +84,14 @@ const Dash = () => {
     <>
       <DashLayout
         // Logo
-        onClickLogo={() => {
-          setShellMode("groups");
-          setControlMode("createOnly");
-          setContext("groups");
-        }}
+        onClickLogo={goToGroups}
 
         // Shell
         shellMode={shellMode}
         onClickRow={(name) => {
-          setGroupName(name);
-          setShellMode("groupView");
-          setControlMode("viewing");
-          setContext("groups");
+          goToGroupView(name);
         }}
-        onClickBack={() => {
-          setShellMode("groups");
-          setControlMode("createOnly");
-          setContext("groups");
-        }}
+        onClickBack={goToGroups}
         groupName={groupName}
         onClickAddField={() => {}}
         onClickTrash={() => {}} // TODO: add delete trash logic backend
@@ -67,69 +99,54 @@ const Dash = () => {
         // ControlBar
         controlMode={controlMode}
         onDelete={() => setShowModal(true)}
-        onCreate={() => {
-          setShellMode("groupEditCreate");
-          setControlMode("editing");
-          setContext("groups");
-          setIsCreating(true);
-        }}
+        onCreate={goToGroupCreate}
         onEdit={() => {
           if (context === "account") {
-            setShellMode("accountEdit");
-            setControlMode("editing");
+            goToAccountEdit();
           } else {
-            setShellMode("groupEditCreate");
-            setControlMode("editing");
+            goToGroupEdit();
           }
-          setIsCreating(false);
         }}
         onSave={() => {
           if (context === "account") {
-            setShellMode("accountView");
-            setControlMode("editOnly");
+            goToAccountView();
           } else {
-            setShellMode("groupView");
-            setControlMode("viewing");
+            goToGroupView(groupName);
           }
         }} // TODO: Add logic
         onCancel={() => {
           if (context === "account") {
-            setShellMode("accountView");
-            setControlMode("editOnly");
+            goToAccountView();
           } else {
-            setShellMode(isCreating ? "groups" : "groupView");
-            setControlMode(isCreating ? "createOnly" : "viewing");
+            if (isCreating) {
+              goToGroups();
+            } else {
+              goToGroupView(groupName);
+            }
           }
         }}
 
         // NavBar
-        onClickAccount={() => {
-          setShellMode("accountView");
-          setControlMode("editOnly");
-          setContext("account");
-        }}
+        onClickAccount={goToAccountView}
         onClickLogOut={async () => {
           await supabase.auth.signOut();
           navigate("/");
         }}
       />
 
-
       {/* Modal Overlay */}
       {showModal && (
-          <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50">
-            <Modal
-              name={groupName ?? ""}
-              category="Group"
-              onClickCancel={() => setShowModal(false)}
-              onClickDelete={() => { // TODO: Add delete logic backend
-                setShowModal(false);
-                setShellMode("groups");
-                setControlMode("createOnly");
-                setContext("groups");
-              }}
-            />
-          </div>
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50">
+          <Modal
+            name={groupName ?? ""}
+            category="Group"
+            onClickCancel={() => setShowModal(false)}
+            onClickDelete={() => { // TODO: Add delete logic backend
+              setShowModal(false);
+              goToGroups();
+            }}
+          />
+        </div>
       )}
     </>
   );
