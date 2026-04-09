@@ -29,6 +29,7 @@ const DashLayout = ({
   context,
   refreshKey,
   onFieldCountChange,
+  onClickGroup,
   // Logo props
   onClickLogo,
 }: DashLayoutProps) => {
@@ -44,6 +45,7 @@ const DashLayout = ({
           <NavBar
             onClickAccount={onClickAccount}
             onClickLogOut={onClickLogOut}
+            onClickGroup={onClickGroup}
           />
         </div>
 
@@ -107,6 +109,10 @@ const DashLayout = ({
         <NavBar
           onClickAccount={() => { onClickAccount(); setDrawerOpen(false); }}
           onClickLogOut={onClickLogOut}
+          onClickGroup={(id, name) => {
+            onClickGroup(id, name);
+            setDrawerOpen(false);
+          }}
           borderless
         />
       </div>

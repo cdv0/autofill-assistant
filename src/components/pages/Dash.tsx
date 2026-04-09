@@ -132,6 +132,10 @@ const Dash = () => {
           setGroupId(id);
           goToGroupView(name);
         }}
+        onClickGroup={(id, name) => {
+          setGroupId(id);
+          goToGroupView(name);
+        }}
         onClickBack={goToGroups}
         groupName={groupName}
         groupId={groupId}
