@@ -220,54 +220,60 @@ const Dash = () => {
       {/* Delete Modal */}
       {showDeleteModal && (
         <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowDeleteModal(false)}>
-          <Modal
-            variant="delete"
-            id={groupId ?? ""}
-            displayName={groupName ?? ""}
-            category="Group"
-            onClickCancel={() => setShowDeleteModal(false)}
-            onClickConfirm={handleDeleteGroup}
-          />
+          <div onClick={(e) => e.stopPropagation()}>
+            <Modal
+              variant="delete"
+              id={groupId ?? ""}
+              displayName={groupName ?? ""}
+              category="Group"
+              onClickCancel={() => setShowDeleteModal(false)}
+              onClickConfirm={handleDeleteGroup}
+            />
+          </div>
         </div>
       )}
 
       {/* Create Modal */}
       {showCreateModal && (
-        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowCreateModal(false)}>
-          <Modal
-            variant="create"
-            category="Group"
-            inputValue={newGroupName}
-            onInputChange={(e) => setNewGroupName(e.target.value)}
-            onClickCancel={() => {
-              setShowCreateModal(false);
-              setNewGroupName("");
-            }}
-            onClickConfirm={handleCreateGroup}
-          />
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowDeleteModal(false)}>
+          <div onClick={(e) => e.stopPropagation()}>
+            <Modal
+              variant="create"
+              category="Group"
+              inputValue={newGroupName}
+              onInputChange={(e) => setNewGroupName(e.target.value)}
+              onClickCancel={() => {
+                setShowCreateModal(false);
+                setNewGroupName("");
+              }}
+              onClickConfirm={handleCreateGroup}
+            />
+          </div>
         </div>
       )}
 
       {/* Add Field Modal */}
       {showAddFieldModal && (
-        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowAddFieldModal(false)}>
-          <Modal
-            variant="edit"
-            category="Field"
-            titleOverride="Add field"
-            labelText="Enter label"
-            valueText="Enter value"
-            labelValue={newFieldLabel}
-            onLabelChange={(e) => setNewFieldLabel(e.target.value)}
-            valueValue={newFieldValue}
-            onValueChange={(e) => setNewFieldValue(e.target.value)}
-            onClickCancel={() => {
-              setShowAddFieldModal(false);
-              setNewFieldLabel("");
-              setNewFieldValue("");
-            }}
-            onClickConfirm={handleAddField}
-          />
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowDeleteModal(false)}>
+          <div onClick={(e) => e.stopPropagation()}>
+            <Modal
+              variant="edit"
+              category="Field"
+              titleOverride="Add field"
+              labelText="Enter label"
+              valueText="Enter value"
+              labelValue={newFieldLabel}
+              onLabelChange={(e) => setNewFieldLabel(e.target.value)}
+              valueValue={newFieldValue}
+              onValueChange={(e) => setNewFieldValue(e.target.value)}
+              onClickCancel={() => {
+                setShowAddFieldModal(false);
+                setNewFieldLabel("");
+                setNewFieldValue("");
+              }}
+              onClickConfirm={handleAddField}
+            />
+          </div>
         </div>
       )}
     </>
