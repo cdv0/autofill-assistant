@@ -5,9 +5,10 @@ import { CircleUserRound, LogOut } from "lucide-react";
 export interface NavProps {
   onClickAccount: () => void;
   onClickLogOut: () => void;
+  borderless?: boolean;
 }
 
-const NavBar = ({ onClickAccount, onClickLogOut }: NavProps) => {
+const NavBar = ({ onClickAccount, onClickLogOut, borderless = false }: NavProps) => {
   const [toggle, setToggle] = useState(false)
 
   // TODO: Delete dummy data (fields)
@@ -18,8 +19,8 @@ const NavBar = ({ onClickAccount, onClickLogOut }: NavProps) => {
   ];
   return (
     
-    <div className="flex flex-col bg-white rounded-2xl border border-stroke p-4 gap-2 justify-between min-w-64 max-w-80 h-full">
-      {/* TOP SECTION */}
+    <div className={`flex flex-col bg-white rounded-2xl p-4 gap-2 justify-between min-w-64 max-w-80 h-full ${borderless ? "" : "border border-stroke"}`}>
+        {/* TOP SECTION */}
         <div>
           {/* DROPDOWN */}
           <NavItem text="All groups" onClick={() => setToggle(prev => !prev)} isDropdown={true} className={ toggle ? "bg-lightBlue" : ""} isOpen={toggle}/>

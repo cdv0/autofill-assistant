@@ -8,17 +8,19 @@ export interface LogoProps {
     size?: "sm" | "md" | "lg";
     onClickLogo?: () => void;
     text?: boolean;
+    iconOnly?: boolean;
 }
 
 const Logo = ({
     size = "md",
     onClickLogo,
-    text = true
+    text = true,
+    iconOnly = false
 }: LogoProps) => {
     return (
         <button onClick={onClickLogo} className="flex justify-center items-center gap-2 p-2 cursor-pointer">
             <img src="../src/assets/logo-image.svg" className={sizeClasses[size].img} />
-            {text && <p className={`font-istok font-bold ${sizeClasses[size].text}`}>Auto Fill AI</p>}
+            {!iconOnly && text && <p className={`font-istok font-bold ${sizeClasses[size].text}`}>Auto Fill AI</p>}
         </button>
     )
 }
