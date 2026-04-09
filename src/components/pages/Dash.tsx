@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Modal from "../organisms/Modal";
 import { supabase } from "../../lib/supabaseClient";
 import { createGroup, deleteGroup } from "../../services/groupService";
+import { insertField } from "../../services/groupFieldService";
 import { useNavigate } from "react-router-dom";
 
 const Dash = () => {
@@ -14,7 +15,12 @@ const Dash = () => {
   const [groupId, setGroupId] = useState<string | undefined>(undefined);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showAddFieldModal, setShowAddFieldModal] = useState(false);
   const [newGroupName, setNewGroupName] = useState("");
+  const [newFieldLabel, setNewFieldLabel] = useState("");
+  const [newFieldValue, setNewFieldValue] = useState("");
+  const [fieldCount, setFieldCount] = useState(0);
+  const [refreshKey, setRefreshKey] = useState(0);
   const [context, setContext] = useState<"groups" | "account">("groups");
   const [isCreating, setIsCreating] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -76,6 +82,21 @@ const Dash = () => {
     goToGroups();
   };
 
+  const handleAddField = async () => {
+    if (!newFieldLabel.trim() || !groupId) return;
+    await insertField({
+      fields_id: crypto.randomUUID(),
+      group_id: groupId,
+      label: newFieldLabel.trim(),
+      value: newFieldValue.trim(),
+      position: fieldCount + 1,
+    });
+    setRefreshKey((prev) => prev + 1);
+    setShowAddFieldModal(false);
+    setNewFieldLabel("");
+    setNewFieldValue("");
+  };
+
   useEffect(() => {
     const checkUser = async () => {
       const { data } = await supabase.auth.getUser();
@@ -116,11 +137,14 @@ const Dash = () => {
         groupId={groupId}
         onClickAddField={() => {}}
         onClickTrash={() => {}} // TODO: add delete trash logic backend
+        refreshKey={refreshKey}
+        onFieldCountChange={setFieldCount}
 
         // ControlBar
         controlMode={controlMode}
         onDelete={() => setShowDeleteModal(true)}
         onCreate={() => setShowCreateModal(true)}
+        onAddField={() => setShowAddFieldModal(true)}
         onEdit={() => {
           if (context === "account") {
             goToAccountEdit();
@@ -182,6 +206,29 @@ const Dash = () => {
               setNewGroupName("");
             }}
             onClickConfirm={handleCreateGroup}
+          />
+        </div>
+      )}
+
+      {/* Add Field Modal Overlay */}
+      {showAddFieldModal && (
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50">
+          <Modal
+            variant="edit"
+            category="Field"
+            titleOverride="Add field"
+            labelText="Enter label"
+            valueText="Enter value"
+            labelValue={newFieldLabel}
+            onLabelChange={(e) => setNewFieldLabel(e.target.value)}
+            valueValue={newFieldValue}
+            onValueChange={(e) => setNewFieldValue(e.target.value)}
+            onClickCancel={() => {
+              setShowAddFieldModal(false);
+              setNewFieldLabel("");
+              setNewFieldValue("");
+            }}
+            onClickConfirm={handleAddField}
           />
         </div>
       )}

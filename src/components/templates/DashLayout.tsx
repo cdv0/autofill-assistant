@@ -1,4 +1,3 @@
-// DashLayout.tsx
 import NavBar, { type NavProps } from "../organisms/NavigationBar";
 import Shell, { type ShellProps } from "../organisms/MainContentShell";
 import ControlBar, { type ControlBarProps } from "../molecules/ControlBar";
@@ -13,6 +12,7 @@ const DashLayout = ({
   // ControlBar props
   controlMode,
   onCreate,
+  onAddField,
   onSave,
   onDelete,
   onCancel,
@@ -46,6 +46,7 @@ const DashLayout = ({
           <ControlBar
             controlMode={controlMode}
             onCreate={onCreate}
+            onAddField={onAddField}
             onSave={onSave}
             onDelete={onDelete}
             onCancel={onCancel}

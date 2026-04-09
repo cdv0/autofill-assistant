@@ -11,7 +11,7 @@ interface DeleteVariant {
 }
 
 interface FormVariant {
-  variant: "create" | "edit";
+  variant: "create";
   category: string;
   inputLabel?: string;
   inputPlaceholder?: string;
@@ -20,7 +20,19 @@ interface FormVariant {
   onInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-type ModalProps = (DeleteVariant | FormVariant) & {
+interface EditVariant {
+  variant: "edit";
+  category: string;
+  titleOverride?: string;
+  labelText?: string;
+  valueText?: string;
+  labelValue?: string;
+  onLabelChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  valueValue?: string;
+  onValueChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+type ModalProps = (DeleteVariant | FormVariant | EditVariant) & {
   onClickCancel: () => void;
   onClickConfirm: () => void;
 };
@@ -32,17 +44,24 @@ const Modal = (props: ModalProps) => {
     props.variant === "delete"
       ? `Delete this ${props.category.toLowerCase()}?`
       : props.variant === "edit"
-      ? `Edit ${props.category.toLowerCase()}`
+      ? (props.titleOverride ?? `Edit ${props.category.toLowerCase()}`)
       : `Create ${props.category.toLowerCase()}`;
 
   const confirmButton =
     props.variant === "delete" ? (
       <Button name="Delete" color="dangerFill" onClick={onClickConfirm} />
+    ) : props.variant === "edit" ? (
+      <Button
+        name="Save"
+        color="primaryFill"
+        onClick={onClickConfirm}
+        disabled={!props.labelValue?.trim()}
+      />
     ) : (
       <Button
-        name={props.variant === "edit" ? "Save" : "Create"}
+        name="Create"
         color="primaryFill"
-        icon={props.variant === "create" ? Plus : undefined}
+        icon={Plus}
         onClick={onClickConfirm}
         disabled={!props.inputValue?.trim()}
       />
@@ -58,6 +77,23 @@ const Modal = (props: ModalProps) => {
           <span className="text-secondary font-semibold">{props.displayName}</span>{" "}
           will be removed permanently. Are you sure you want to continue?
         </p>
+      ) : props.variant === "edit" ? (
+        <div className="flex flex-col gap-3">
+          <LabelInput
+            type="text"
+            labelText={props.labelText ?? "Enter new label"}
+            placeholder={props.labelText ?? "Enter new label"}
+            value={props.labelValue}
+            onChange={props.onLabelChange}
+          />
+          <LabelInput
+            type="text"
+            labelText={props.valueText ?? "Enter new value"}
+            placeholder={props.valueText ?? "Enter new value"}
+            value={props.valueValue}
+            onChange={props.onValueChange}
+          />
+        </div>
       ) : (
         <LabelInput
           type="text"

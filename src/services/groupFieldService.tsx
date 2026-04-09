@@ -115,6 +115,8 @@ export const updateSingleField = async (field: GroupField) => {
         .eq("group_id", field.group_id)
         .select();
 
+    console.log("fields_id:", field.fields_id);
+    console.log("group_id:", field.group_id);
     console.log("Group Field updated: ", data);
     console.log("Error: ", error);
 
@@ -154,7 +156,7 @@ export const deleteSingleField = async (fields_id: string) => {
     const { data, error } = await supabase
       .from("group_fields")
       .delete()
-      .in("fields_id", fields_id)
+      .eq("fields_id", fields_id)
       .select();
 
     console.log("Group Fields deleted: ", data);
