@@ -5,6 +5,7 @@ import { supabase } from "../../lib/supabaseClient";
 import { createGroup, deleteGroup } from "../../services/groupService";
 import { insertField } from "../../services/groupFieldService";
 import { useNavigate } from "react-router-dom";
+import { updateUserEmail, updateUserPassword, fetchUser } from "../../services/accountService";
 
 const Dash = () => {
   const navigate = useNavigate();
@@ -24,6 +25,11 @@ const Dash = () => {
   const [context, setContext] = useState<"groups" | "account">("groups");
   const [isCreating, setIsCreating] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  // Account edit state
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [accountNotification, setAccountNotification] = useState<string | null>(null);
 
   const goToGroups = () => {
     setShellMode("groups");
@@ -61,11 +67,34 @@ const Dash = () => {
     setIsCreating(false);
   };
 
-  const goToAccountEdit = () => {
+  const goToAccountEdit = async () => {
+    const user = await fetchUser();
+    if (user?.email) setEmail(user.email);
+    setPassword("");
+    setAccountNotification(null);
     setShellMode("accountEdit");
     setControlMode("editing");
     setContext("account");
     setIsCreating(false);
+  };
+
+  const handleSaveAccount = async () => {
+    let notification: string | null = null;
+
+    if (email) {
+      await updateUserEmail(email);
+      notification = "Check your new email to confirm the change.";
+    }
+    if (password) {
+      await updateUserPassword(password);
+      notification = "Password updated successfully.";
+    }
+
+    setAccountNotification(notification);
+    goToAccountView();
+
+    // Auto-dismiss after 4 seconds
+    setTimeout(() => setAccountNotification(null), 4000);
   };
 
   const handleCreateGroup = async () => {
@@ -100,14 +129,12 @@ const Dash = () => {
   useEffect(() => {
     const checkUser = async () => {
       const { data } = await supabase.auth.getUser();
-
       if (!data.user) {
         navigate("/");
       } else {
         setLoading(false);
       }
     };
-
     checkUser();
   }, [navigate]);
 
@@ -140,9 +167,16 @@ const Dash = () => {
         groupName={groupName}
         groupId={groupId}
         onClickAddField={() => {}}
-        onClickTrash={() => {}} // TODO: add delete trash logic backend
+        onClickTrash={() => {}}
         refreshKey={refreshKey}
         onFieldCountChange={setFieldCount}
+
+        // Account edit state
+        email={email}
+        password={password}
+        onEmailChange={setEmail}
+        onPasswordChange={setPassword}
+        accountNotification={accountNotification}
 
         // ControlBar
         controlMode={controlMode}
@@ -158,11 +192,11 @@ const Dash = () => {
         }}
         onSave={() => {
           if (context === "account") {
-            goToAccountView();
+            handleSaveAccount();
           } else {
             goToGroupView(groupName);
           }
-        }} // TODO: Add logic
+        }}
         onCancel={() => {
           if (context === "account") {
             goToAccountView();
@@ -183,7 +217,7 @@ const Dash = () => {
         }}
       />
 
-      {/* Delete Modal Overlay */}
+      {/* Delete Modal */}
       {showDeleteModal && (
         <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowDeleteModal(false)}>
           <Modal
@@ -197,7 +231,7 @@ const Dash = () => {
         </div>
       )}
 
-      {/* Create Modal Overlay */}
+      {/* Create Modal */}
       {showCreateModal && (
         <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowCreateModal(false)}>
           <Modal
@@ -214,7 +248,7 @@ const Dash = () => {
         </div>
       )}
 
-      {/* Add Field Modal Overlay */}
+      {/* Add Field Modal */}
       {showAddFieldModal && (
         <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowAddFieldModal(false)}>
           <Modal

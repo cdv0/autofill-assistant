@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Dash from "./components/pages/Dash";
 import Auth from "./components/pages/Auth";
 import ResetPassword from "./components/pages/ResetPassword";
+import ConfirmPage from "./components/pages/Confirmation";
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
 
             {/*  RESET PASSWORD */}
             <Route path="/reset-password" element={<ResetPassword />} />
+
+            {/* CONFIRMATION PAGE */}
+            <Route path="/confirm" element={<ConfirmPage />} />
 
             {/* fallback for unknown routes */}
             <Route path="*" element={<Navigate to="/" replace />} />

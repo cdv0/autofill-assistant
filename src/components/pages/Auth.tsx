@@ -120,7 +120,7 @@ const Auth = () => {
 
   return (
     <div className="min-h-screen w-full flex justify-center items-center">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md shadow-md rounded-2xl">
         <AuthForm 
           mode={mode} 
           onClickSubmit={handleSubmit} 

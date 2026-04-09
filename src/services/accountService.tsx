@@ -27,9 +27,10 @@ export const updateUserEmail = async (newEmail: string) => {
     return null;
   }
 
-  const { data, error } = await supabase.auth.updateUser({
-    email: newEmail,
-  });
+  const { data, error } = await supabase.auth.updateUser(
+    {email: newEmail},
+    { emailRedirectTo: "http://localhost:5173/confirm?type=email_change" }
+);
 
   console.log("Updated user:", data);
   console.log("Error:", error);

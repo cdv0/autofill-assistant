@@ -24,12 +24,19 @@ const DashLayout = ({
   onClickBack,
   shellMode,
   groupId,
+  groupName,
   onClickAddField,
   onClickTrash,
   context,
   refreshKey,
   onFieldCountChange,
   onClickGroup,
+  // Account props
+  email,
+  password,
+  accountNotification,
+  onEmailChange,
+  onPasswordChange,
   // Logo props
   onClickLogo,
 }: DashLayoutProps) => {
@@ -78,11 +85,17 @@ const DashLayout = ({
             onClickRow={onClickRow}
             onClickBack={onClickBack}
             groupId={groupId}
+            groupName={groupName}
             onClickAddField={onClickAddField}
             onClickTrash={onClickTrash}
             context={context}
+            accountNotification={accountNotification}
             refreshKey={refreshKey}
             onFieldCountChange={onFieldCountChange}
+            email={email}
+            password={password}
+            onEmailChange={onEmailChange}
+            onPasswordChange={onPasswordChange}
           />
         </div>
       </div>
@@ -96,9 +109,9 @@ const DashLayout = ({
       )}
 
       {/* Mobile drawer */}
-        <div className={`fixed top-0 left-0 h-full z-50 flex flex-col gap-2 py-4 bg-white w-72 transition-transform duration-300 ease-in-out md:hidden ${drawerOpen ? "translate-x-0" : "-translate-x-full"}`}>
-          <div className="flex items-center justify-between px-4">
-            <Logo size="md" onClickLogo={() => { onClickLogo?.(); setDrawerOpen(false); }} />
+      <div className={`fixed top-0 left-0 h-full z-50 flex flex-col gap-2 py-4 bg-white w-72 transition-transform duration-300 ease-in-out md:hidden ${drawerOpen ? "translate-x-0" : "-translate-x-full"}`}>
+        <div className="flex items-center justify-between px-4">
+          <Logo size="md" onClickLogo={() => { onClickLogo?.(); setDrawerOpen(false); }} />
           <button
             onClick={() => setDrawerOpen(false)}
             className="p-2 cursor-pointer"

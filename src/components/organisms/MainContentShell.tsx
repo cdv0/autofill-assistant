@@ -6,24 +6,33 @@ import AccountView, { type AccountViewProps } from "./AccountView";
 
 export interface ShellProps extends GroupsProps, AccountEditProps, AccountViewProps, GroupEditProps, GroupViewProps {
   shellMode: "groups" | "groupView" | "groupEditCreate" | "accountView" | "accountEdit";
+  accountNotification?: string | null;
 }
 
-const Shell = ( { 
+const Shell = ({ 
   shellMode,
   onClickRow,
   onClickBack,
   groupId,
   onClickTrash,
-  context
- }: ShellProps) => {
+  context,
+  refreshKey,
+  onFieldCountChange,
+  accountNotification,
+  // Account props
+  email,
+  password,
+  onEmailChange,
+  onPasswordChange,
+}: ShellProps) => {
   return (
-    <div className={`bg-white py-4 px-6 pb-8 border border-stroke rounded-2xl flex-1 min-h-0 overflow-y-auto`}>
+    <div className="bg-white py-4 px-6 pb-8 border border-stroke rounded-2xl flex-1 min-h-0 overflow-y-auto">
       {shellMode === "groups" && (
         <Groups onClickBack={onClickBack} onClickRow={onClickRow} />
       )}
 
       {shellMode === "groupView" && (
-        <GroupView groupId={groupId} onClickBack={onClickBack}/>
+        <GroupView groupId={groupId} onClickBack={onClickBack} />
       )}
 
       {shellMode === "groupEditCreate" && (
@@ -31,14 +40,19 @@ const Shell = ( {
       )}
 
       {shellMode === "accountView" && (
-        <AccountView />
+        <AccountView notification={accountNotification} />
       )}
 
       {shellMode === "accountEdit" && (
-        <AccountEdit />
+        <AccountEdit
+          email={email}
+          password={password}
+          onEmailChange={onEmailChange}
+          onPasswordChange={onPasswordChange}
+        />
       )}
     </div>
-  )
-}
+  );
+};
 
 export default Shell;
