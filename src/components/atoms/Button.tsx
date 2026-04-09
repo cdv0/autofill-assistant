@@ -34,6 +34,7 @@ interface ButtonProps {
   iconPosition?: "left" | "right";
   strokeWidth?: number;
   xPadding?: string;
+  disabled?: boolean;
 }
 
 const Button = ({
@@ -44,13 +45,15 @@ const Button = ({
   icon: Icon,
   iconPosition = "left",
   strokeWidth = 2,
-  xPadding = "px-5"
+  xPadding = "px-5",
+  disabled = false,
 }: ButtonProps) => {
   return (
     <button
-      className={`btn flex flex-row justify-center items-center gap-2 min-w-min ${xPadding} py-2.5 ${colorClasses[color]} rounded-xl text-sm font-medium w-fit cursor-pointer`}
+      className={`btn flex flex-row justify-center items-center gap-2 min-w-min ${xPadding} py-2.5 ${colorClasses[color]} rounded-xl text-sm font-medium w-fit cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed`}
       type={type}
       onClick={onClick}
+      disabled={disabled}
     >
       {Icon && iconPosition === "left" && <Icon className="w-4 h-5" strokeWidth={strokeWidth} />}
 

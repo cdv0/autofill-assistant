@@ -2,6 +2,7 @@ import DashLayout from "../templates/DashLayout";
 import { useEffect, useState } from "react";
 import Modal from "../organisms/Modal";
 import { supabase } from "../../lib/supabaseClient";
+import { createGroup } from "../../services/groupService";
 import { useNavigate } from "react-router-dom";
 
 const Dash = () => {
@@ -11,7 +12,9 @@ const Dash = () => {
   const [controlMode, setControlMode] = useState<"viewing" | "editing" | "editOnly" | "createOnly">("createOnly");
   const [groupName, setGroupName] = useState<string | undefined>(undefined);
   const [groupId, setGroupId] = useState<string | undefined>(undefined);
-  const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [newGroupName, setNewGroupName] = useState("");
   const [context, setContext] = useState<"groups" | "account">("groups");
   const [isCreating, setIsCreating] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -59,6 +62,13 @@ const Dash = () => {
     setIsCreating(false);
   };
 
+  const handleCreateGroup = async () => {
+    if (!newGroupName.trim()) return;
+    await createGroup(newGroupName.trim());
+    setShowCreateModal(false);
+    setNewGroupName("");
+  };
+
   useEffect(() => {
     const checkUser = async () => {
       const { data } = await supabase.auth.getUser();
@@ -102,8 +112,8 @@ const Dash = () => {
 
         // ControlBar
         controlMode={controlMode}
-        onDelete={() => setShowModal(true)}
-        onCreate={goToGroupCreate}
+        onDelete={() => setShowDeleteModal(true)}
+        onCreate={() => setShowCreateModal(true)}
         onEdit={() => {
           if (context === "account") {
             goToAccountEdit();
@@ -138,17 +148,35 @@ const Dash = () => {
         }}
       />
 
-      {/* Modal Overlay */}
-      {showModal && (
+      {/* Delete Modal Overlay */}
+      {showDeleteModal && (
         <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50">
           <Modal
+            variant="delete"
             name={groupName ?? ""}
             category="Group"
-            onClickCancel={() => setShowModal(false)}
-            onClickDelete={() => { // TODO: Add delete logic backend
-              setShowModal(false);
+            onClickCancel={() => setShowDeleteModal(false)}
+            onClickConfirm={() => {
+              setShowDeleteModal(false);
               goToGroups();
             }}
+          />
+        </div>
+      )}
+
+      {/* Create Modal Overlay */}
+      {showCreateModal && (
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50">
+          <Modal
+            variant="create"
+            category="Group"
+            inputValue={newGroupName}
+            onInputChange={(e) => setNewGroupName(e.target.value)}
+            onClickCancel={() => {
+              setShowCreateModal(false);
+              setNewGroupName("");
+            }}
+            onClickConfirm={handleCreateGroup}
           />
         </div>
       )}
