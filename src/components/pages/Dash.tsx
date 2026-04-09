@@ -181,7 +181,7 @@ const Dash = () => {
 
       {/* Delete Modal Overlay */}
       {showDeleteModal && (
-        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowDeleteModal(false)}>
           <Modal
             variant="delete"
             id={groupId ?? ""}
@@ -195,7 +195,7 @@ const Dash = () => {
 
       {/* Create Modal Overlay */}
       {showCreateModal && (
-        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowCreateModal(false)}>
           <Modal
             variant="create"
             category="Group"
@@ -212,7 +212,7 @@ const Dash = () => {
 
       {/* Add Field Modal Overlay */}
       {showAddFieldModal && (
-        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowAddFieldModal(false)}>
           <Modal
             variant="edit"
             category="Field"
