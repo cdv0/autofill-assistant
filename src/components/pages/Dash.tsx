@@ -2,7 +2,7 @@ import DashLayout from "../templates/DashLayout";
 import { useEffect, useState } from "react";
 import Modal from "../organisms/Modal";
 import { supabase } from "../../lib/supabaseClient";
-import { createGroup } from "../../services/groupService";
+import { createGroup, deleteGroup } from "../../services/groupService";
 import { useNavigate } from "react-router-dom";
 
 const Dash = () => {
@@ -69,6 +69,13 @@ const Dash = () => {
     setNewGroupName("");
   };
 
+  const handleDeleteGroup = async () => {
+    if (!groupId) return;
+    await deleteGroup(groupId);
+    setShowDeleteModal(false);
+    goToGroups();
+  };
+
   useEffect(() => {
     const checkUser = async () => {
       const { data } = await supabase.auth.getUser();
@@ -100,9 +107,9 @@ const Dash = () => {
         // Shell
         context={context}
         shellMode={shellMode}
-        onClickRow={(id) => {
+        onClickRow={(id, name) => {
           setGroupId(id);
-          goToGroupView(id);
+          goToGroupView(name);
         }}
         onClickBack={goToGroups}
         groupName={groupName}
@@ -153,13 +160,11 @@ const Dash = () => {
         <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50">
           <Modal
             variant="delete"
-            name={groupName ?? ""}
+            id={groupId ?? ""}
+            displayName={groupName ?? ""}
             category="Group"
             onClickCancel={() => setShowDeleteModal(false)}
-            onClickConfirm={() => {
-              setShowDeleteModal(false);
-              goToGroups();
-            }}
+            onClickConfirm={handleDeleteGroup}
           />
         </div>
       )}

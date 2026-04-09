@@ -5,7 +5,8 @@ import type { LucideIcon } from "lucide-react";
 
 interface DeleteVariant {
   variant: "delete";
-  name: string;
+  id: string;
+  displayName: string;
   category: string;
 }
 
@@ -54,7 +55,7 @@ const Modal = (props: ModalProps) => {
       {props.variant === "delete" ? (
         <p>
           {props.category}{" "}
-          <span className="text-secondary font-semibold">{props.name}</span>{" "}
+          <span className="text-secondary font-semibold">{props.displayName}</span>{" "}
           will be removed permanently. Are you sure you want to continue?
         </p>
       ) : (

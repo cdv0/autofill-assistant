@@ -6,7 +6,7 @@ import { fetchAllGroups } from "../../services/groupService";
 import { type GroupData } from "./GroupView";
 
 export interface GroupsProps {
-  onClickRow: (id: string) => void;
+  onClickRow: (id: string, name: string) => void;
   onClickBack?: () => void;
 }
 
@@ -46,7 +46,7 @@ const Groups = ({ onClickRow, onClickBack }: GroupsProps) => {
             <GroupRow
               name={group.name}
               dateModified={new Date(group.last_modified)}
-              onClickRow={() => onClickRow?.(group.group_id)}
+              onClickRow={() => onClickRow?.(group.group_id, group.name)}
             />
           </div>
         ))}
