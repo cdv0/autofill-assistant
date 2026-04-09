@@ -1,7 +1,6 @@
 import NavItem from "../atoms/NavItem";
-import { useEffect, useState } from "react";
+import { useState, useMemo } from "react";
 import { CircleUserRound, LogOut } from "lucide-react";
-import { fetchAllGroups } from "../../services/groupService";
 
 interface Group {
   group_id: string;
@@ -13,6 +12,7 @@ export interface NavProps {
   onClickAccount: () => void;
   onClickLogOut: () => void;
   onClickGroup: (id: string, name: string) => void;
+  groups?: Group[];
   borderless?: boolean;
 }
 
@@ -20,19 +20,12 @@ const NavBar = ({
   onClickAccount,
   onClickLogOut,
   onClickGroup,
+  groups = [],
   borderless = false,
 }: NavProps) => {
   const [toggle, setToggle] = useState(false);
-  const [groups, setGroups] = useState<Group[]>([]);
 
-  useEffect(() => {
-    const loadGroups = async () => {
-      const data = await fetchAllGroups();
-      setGroups(data ?? []);
-    };
-
-    loadGroups();
-  }, []);
+  const memoizedGroups = useMemo(() => groups, [groups]);
 
   return (
     <div
@@ -57,7 +50,7 @@ const NavBar = ({
         >
           <div className="flex flex-col gap-2 pt-1">
             {toggle &&
-              groups.map((group) => (
+              memoizedGroups.map((group) => (
                 <NavItem
                   key={group.group_id}
                   text={group.name}

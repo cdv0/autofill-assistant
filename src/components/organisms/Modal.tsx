@@ -69,7 +69,7 @@ const Modal = (props: ModalProps) => {
 
   return (
     <div 
-      className="flex flex-col bg-white rounded-2xl border border-stroke py-4 px-6 min-w-md gap-3"
+      className="flex flex-col bg-white rounded-2xl border border-stroke py-4 px-6 min-w-sm max-w-md gap-3"
       onClick={(e) => e.stopPropagation()}
     >
       <h1 className="font-semibold text-lg">{title}</h1>

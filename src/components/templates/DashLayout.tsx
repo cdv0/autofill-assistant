@@ -31,6 +31,7 @@ const DashLayout = ({
   refreshKey,
   onFieldCountChange,
   onClickGroup,
+  groups,
   // Account props
   email,
   password,
@@ -53,6 +54,7 @@ const DashLayout = ({
             onClickAccount={onClickAccount}
             onClickLogOut={onClickLogOut}
             onClickGroup={onClickGroup}
+            groups={groups}
           />
         </div>
 
@@ -89,13 +91,14 @@ const DashLayout = ({
             onClickAddField={onClickAddField}
             onClickTrash={onClickTrash}
             context={context}
-            accountNotification={accountNotification}
             refreshKey={refreshKey}
             onFieldCountChange={onFieldCountChange}
+            groups={groups}
             email={email}
             password={password}
             onEmailChange={onEmailChange}
             onPasswordChange={onPasswordChange}
+            accountNotification={accountNotification}
           />
         </div>
       </div>
@@ -126,6 +129,7 @@ const DashLayout = ({
             onClickGroup(id, name);
             setDrawerOpen(false);
           }}
+          groups={groups}
           borderless
         />
       </div>

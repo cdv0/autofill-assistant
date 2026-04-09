@@ -1,12 +1,13 @@
 import Button from "../atoms/Button";
 import LabelView from "../molecules/LabelView";
 import Modal from "../organisms/Modal";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { fetchGroup } from "../../services/groupService"
 import { fetchRelatedGroupFields, updateSingleField, deleteSingleField } from "../../services/groupFieldService";
 
 export interface GroupViewProps {
   groupId: string;
+  refreshKey?: number;
   onClickBack?: () => void;
 }
 
@@ -24,7 +25,7 @@ export type GroupField = {
   position: number;
 }
 
-const GroupView = ({ groupId, onClickBack }: GroupViewProps) => {
+const GroupView = ({ groupId, onClickBack, refreshKey }: GroupViewProps) => {
   const [groupData, setGroupData] = useState<GroupData | null>(null);
   const [fields, setFields] = useState<GroupField[]>([]);
   const [editingField, setEditingField] = useState<GroupField | null>(null);
@@ -32,22 +33,25 @@ const GroupView = ({ groupId, onClickBack }: GroupViewProps) => {
   const [editLabel, setEditLabel] = useState("");
   const [editValue, setEditValue] = useState("");
 
-  useEffect(() => {
-    const loadGroupDetails = async () => {
-      if (!groupId) return;
+  const loadGroupDetails = useCallback(async () => {
+    if (!groupId) return;
 
-      const group = await fetchGroup(groupId);
-      const groupFields = await fetchRelatedGroupFields(groupId);
+    const [group, groupFields] = await Promise.all([
+      fetchGroup(groupId),
+      fetchRelatedGroupFields(groupId),
+    ]);
 
-      console.log("group:", group);
-      console.log("groupFields:", groupFields);
-
-      setGroupData(group ?? null);
-      setFields(groupFields ?? []);
-    };
-
-    loadGroupDetails();
+    setGroupData((prev) =>
+      JSON.stringify(prev) !== JSON.stringify(group) ? (group ?? null) : prev
+    );
+    setFields((prev) =>
+      JSON.stringify(prev) !== JSON.stringify(groupFields) ? (groupFields ?? []) : prev
+    );
   }, [groupId]);
+
+  useEffect(() => {
+    loadGroupDetails();
+  }, [loadGroupDetails, refreshKey]);
 
   const handleEditField = async () => {
     if (!editingField) return;
@@ -59,9 +63,7 @@ const GroupView = ({ groupId, onClickBack }: GroupViewProps) => {
     );
 
     const payload = { ...editingField, label: editLabel, value: editValue };
-    console.log("Updating field with payload:", payload);
-    const result = await updateSingleField(payload);
-    console.log("Update result:", result);
+    await updateSingleField(payload);
     setFields(updated);
     setEditingField(null);
   };
@@ -77,8 +79,8 @@ const GroupView = ({ groupId, onClickBack }: GroupViewProps) => {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex justify-between">
-        <h1 className="text-lg text-darkGray">Groups  {" > "} <span className="text-primary font-medium"> {groupData?.name ?? ""}</span></h1>
-        <Button color="secondaryNoFill" name="Back" onClick={onClickBack}/>
+        <h1 className="text-lg text-darkGray">Groups {" > "} <span className="text-primary font-medium">{groupData?.name ?? ""}</span></h1>
+        <Button color="secondaryNoFill" name="Back" onClick={onClickBack} />
       </div>
 
       {/* COLUMNS */}
@@ -104,31 +106,35 @@ const GroupView = ({ groupId, onClickBack }: GroupViewProps) => {
 
       {/* Edit Modal Overlay */}
       {editingField && (
-        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50">
-          <Modal
-            variant="edit"
-            category="Field"
-            labelValue={editLabel}
-            onLabelChange={(e) => setEditLabel(e.target.value)}
-            valueValue={editValue}
-            onValueChange={(e) => setEditValue(e.target.value)}
-            onClickCancel={() => setEditingField(null)}
-            onClickConfirm={handleEditField}
-          />
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setEditingField(null)}>
+          <div onClick={(e) => e.stopPropagation()}>
+            <Modal
+              variant="edit"
+              category="Field"
+              labelValue={editLabel}
+              onLabelChange={(e) => setEditLabel(e.target.value)}
+              valueValue={editValue}
+              onValueChange={(e) => setEditValue(e.target.value)}
+              onClickCancel={() => setEditingField(null)}
+              onClickConfirm={handleEditField}
+            />
+          </div>
         </div>
       )}
 
       {/* Delete Modal Overlay */}
       {deletingField && (
-        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50">
-          <Modal
-            variant="delete"
-            category="Field"
-            id={deletingField.fields_id}
-            displayName={deletingField.label}
-            onClickCancel={() => setDeletingField(null)}
-            onClickConfirm={handleDeleteField}
-          />
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setDeletingField(null)}>
+          <div onClick={(e) => e.stopPropagation()}>
+            <Modal
+              variant="delete"
+              category="Field"
+              id={deletingField.fields_id}
+              displayName={deletingField.label}
+              onClickCancel={() => setDeletingField(null)}
+              onClickConfirm={handleDeleteField}
+            />
+          </div>
         </div>
       )}
     </div>

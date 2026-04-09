@@ -1,11 +1,12 @@
 import DashLayout from "../templates/DashLayout";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Modal from "../organisms/Modal";
 import { supabase } from "../../lib/supabaseClient";
-import { createGroup, deleteGroup } from "../../services/groupService";
+import { createGroup, deleteGroup, fetchAllGroups } from "../../services/groupService";
 import { insertField } from "../../services/groupFieldService";
 import { useNavigate } from "react-router-dom";
 import { updateUserEmail, updateUserPassword, fetchUser } from "../../services/accountService";
+import { type GroupData } from "../organisms/GroupView";
 
 const Dash = () => {
   const navigate = useNavigate();
@@ -25,11 +26,21 @@ const Dash = () => {
   const [context, setContext] = useState<"groups" | "account">("groups");
   const [isCreating, setIsCreating] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [groups, setGroups] = useState<GroupData[]>([]);
 
   // Account edit state
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [accountNotification, setAccountNotification] = useState<string | null>(null);
+
+  const loadGroups = useCallback(async () => {
+    const data = await fetchAllGroups();
+    setGroups(data ?? []);
+  }, []);
+
+  useEffect(() => {
+    loadGroups();
+  }, [loadGroups, refreshKey]);
 
   const goToGroups = () => {
     setShellMode("groups");
@@ -93,7 +104,6 @@ const Dash = () => {
     setAccountNotification(notification);
     goToAccountView();
 
-    // Auto-dismiss after 4 seconds
     setTimeout(() => setAccountNotification(null), 4000);
   };
 
@@ -102,12 +112,14 @@ const Dash = () => {
     await createGroup(newGroupName.trim());
     setShowCreateModal(false);
     setNewGroupName("");
+    setRefreshKey((prev) => prev + 1);
   };
 
   const handleDeleteGroup = async () => {
     if (!groupId) return;
     await deleteGroup(groupId);
     setShowDeleteModal(false);
+    setRefreshKey((prev) => prev + 1);
     goToGroups();
   };
 
@@ -155,6 +167,7 @@ const Dash = () => {
         // Shell
         context={context}
         shellMode={shellMode}
+        groups={groups}
         onClickRow={(id, name) => {
           setGroupId(id);
           goToGroupView(name);
@@ -235,7 +248,7 @@ const Dash = () => {
 
       {/* Create Modal */}
       {showCreateModal && (
-        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowDeleteModal(false)}>
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowCreateModal(false)}>
           <div onClick={(e) => e.stopPropagation()}>
             <Modal
               variant="create"
@@ -254,7 +267,7 @@ const Dash = () => {
 
       {/* Add Field Modal */}
       {showAddFieldModal && (
-        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowDeleteModal(false)}>
+        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setShowAddFieldModal(false)}>
           <div onClick={(e) => e.stopPropagation()}>
             <Modal
               variant="edit"

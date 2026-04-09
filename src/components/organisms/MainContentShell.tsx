@@ -11,6 +11,7 @@ export interface ShellProps extends GroupsProps, AccountEditProps, AccountViewPr
 
 const Shell = ({ 
   shellMode,
+  groups,
   onClickRow,
   onClickBack,
   groupId,
@@ -28,11 +29,11 @@ const Shell = ({
   return (
     <div className="bg-white py-4 px-6 pb-8 border border-stroke rounded-2xl flex-1 min-h-0 overflow-y-auto">
       {shellMode === "groups" && (
-        <Groups onClickBack={onClickBack} onClickRow={onClickRow} />
+        <Groups onClickBack={onClickBack} onClickRow={onClickRow} groups={groups} />
       )}
 
       {shellMode === "groupView" && (
-        <GroupView groupId={groupId} onClickBack={onClickBack} />
+        <GroupView groupId={groupId} onClickBack={onClickBack} refreshKey={refreshKey}/>
       )}
 
       {shellMode === "groupEditCreate" && (
