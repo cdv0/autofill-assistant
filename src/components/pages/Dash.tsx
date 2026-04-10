@@ -8,13 +8,34 @@ import { useNavigate } from "react-router-dom";
 import { updateUserEmail, updateUserPassword, fetchUser } from "../../services/accountService";
 import { type GroupData } from "../organisms/GroupView";
 
+type ShellMode = "groups" | "groupView" | "groupEditCreate" | "accountView" | "accountEdit";
+type ControlMode = "viewing" | "editing" | "editOnly" | "createOnly";
+
+const SHELL_MODE_KEY = "shellMode";
+const GROUP_ID_KEY = "groupId";
+const GROUP_NAME_KEY = "groupName";
+
 const Dash = () => {
   const navigate = useNavigate();
 
-  const [shellMode, setShellMode] = useState<"groups" | "groupView" | "groupEditCreate" | "accountView" | "accountEdit">("groups");
-  const [controlMode, setControlMode] = useState<"viewing" | "editing" | "editOnly" | "createOnly">("createOnly");
-  const [groupName, setGroupName] = useState<string | undefined>(undefined);
-  const [groupId, setGroupId] = useState<string | undefined>(undefined);
+  const savedShellMode = (localStorage.getItem(SHELL_MODE_KEY) as ShellMode) ?? "groups";
+  const savedGroupId = localStorage.getItem(GROUP_ID_KEY) ?? undefined;
+  const savedGroupName = localStorage.getItem(GROUP_NAME_KEY) ?? undefined;
+
+  const getInitialControlMode = (mode: ShellMode): ControlMode => {
+    switch (mode) {
+      case "groups": return "createOnly";
+      case "groupView": return "viewing";
+      case "groupEditCreate": return "editing";
+      case "accountView": return "editOnly";
+      case "accountEdit": return "editing";
+    }
+  };
+
+  const [shellMode, setShellMode] = useState<ShellMode>(savedShellMode);
+  const [controlMode, setControlMode] = useState<ControlMode>(getInitialControlMode(savedShellMode));
+  const [groupName, setGroupName] = useState<string | undefined>(savedGroupName);
+  const [groupId, setGroupId] = useState<string | undefined>(savedGroupId);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showAddFieldModal, setShowAddFieldModal] = useState(false);
@@ -23,7 +44,9 @@ const Dash = () => {
   const [newFieldValue, setNewFieldValue] = useState("");
   const [fieldCount, setFieldCount] = useState(0);
   const [refreshKey, setRefreshKey] = useState(0);
-  const [context, setContext] = useState<"groups" | "account">("groups");
+  const [context, setContext] = useState<"groups" | "account">(
+    savedShellMode.startsWith("account") ? "account" : "groups"
+  );
   const [isCreating, setIsCreating] = useState(false);
   const [loading, setLoading] = useState(true);
   const [groups, setGroups] = useState<GroupData[]>([]);
@@ -33,6 +56,21 @@ const Dash = () => {
   const [password, setPassword] = useState("");
   const [accountNotification, setAccountNotification] = useState<string | null>(null);
 
+  // Persist shellMode, groupId, groupName to localStorage
+  useEffect(() => {
+    localStorage.setItem(SHELL_MODE_KEY, shellMode);
+  }, [shellMode]);
+
+  useEffect(() => {
+    if (groupId) localStorage.setItem(GROUP_ID_KEY, groupId);
+    else localStorage.removeItem(GROUP_ID_KEY);
+  }, [groupId]);
+
+  useEffect(() => {
+    if (groupName) localStorage.setItem(GROUP_NAME_KEY, groupName);
+    else localStorage.removeItem(GROUP_NAME_KEY);
+  }, [groupName]);
+
   const loadGroups = useCallback(async () => {
     const data = await fetchAllGroups();
     setGroups(data ?? []);
@@ -41,6 +79,19 @@ const Dash = () => {
   useEffect(() => {
     loadGroups();
   }, [loadGroups, refreshKey]);
+
+  // Auth check using onAuthStateChange to avoid redirect flicker
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (!session) {
+        navigate("/");
+      } else {
+        setLoading(false);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate]);
 
   const goToGroups = () => {
     setShellMode("groups");
@@ -55,13 +106,6 @@ const Dash = () => {
     setControlMode("viewing");
     setContext("groups");
     setIsCreating(false);
-  };
-
-  const goToGroupCreate = () => {
-    setShellMode("groupEditCreate");
-    setControlMode("editing");
-    setContext("groups");
-    setIsCreating(true);
   };
 
   const goToGroupEdit = () => {
@@ -103,7 +147,6 @@ const Dash = () => {
 
     setAccountNotification(notification);
     goToAccountView();
-
     setTimeout(() => setAccountNotification(null), 4000);
   };
 
@@ -138,18 +181,6 @@ const Dash = () => {
     setNewFieldValue("");
   };
 
-  useEffect(() => {
-    const checkUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      if (!data.user) {
-        navigate("/");
-      } else {
-        setLoading(false);
-      }
-    };
-    checkUser();
-  }, [navigate]);
-
   if (loading) {
     return (
       <div className="min-h-screen w-full flex justify-center items-center">
@@ -161,10 +192,7 @@ const Dash = () => {
   return (
     <>
       <DashLayout
-        // Logo
         onClickLogo={goToGroups}
-
-        // Shell
         context={context}
         shellMode={shellMode}
         groups={groups}
@@ -183,15 +211,11 @@ const Dash = () => {
         onClickTrash={() => {}}
         refreshKey={refreshKey}
         onFieldCountChange={setFieldCount}
-
-        // Account edit state
         email={email}
         password={password}
         onEmailChange={setEmail}
         onPasswordChange={setPassword}
         accountNotification={accountNotification}
-
-        // ControlBar
         controlMode={controlMode}
         onDelete={() => setShowDeleteModal(true)}
         onCreate={() => setShowCreateModal(true)}
@@ -221,10 +245,11 @@ const Dash = () => {
             }
           }
         }}
-
-        // NavBar
         onClickAccount={goToAccountView}
         onClickLogOut={async () => {
+          localStorage.removeItem(SHELL_MODE_KEY);
+          localStorage.removeItem(GROUP_ID_KEY);
+          localStorage.removeItem(GROUP_NAME_KEY);
           await supabase.auth.signOut();
           navigate("/");
         }}
