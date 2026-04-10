@@ -32,7 +32,7 @@ const NavItem = ({
         <button className={`flex justify-between items-center py-2 px-4 w-full rounded-xl ${styleClasses[style].hover} ${styleClasses[style].text} transition ${className} cursor-pointer`} onClick={onClick}>
             <div className="flex justify-center items-center gap-2">
                 {Icon && <Icon className="w-5 h-5" />}
-                <p className={`font-semibold ${textSize}`}>{text}</p>
+                <p className={`font-medium ${textSize}`}>{text}</p>
             </div>
             {isDropdown && <ChevronDown className={`w-5 h-5 ${isOpen? "rotate-180" : "rotate-0"}`}/>}
         </button>

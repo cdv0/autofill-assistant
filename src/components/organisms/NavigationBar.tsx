@@ -1,6 +1,6 @@
 import NavItem from "../atoms/NavItem";
 import { useState, useMemo } from "react";
-import { CircleUserRound, LogOut } from "lucide-react";
+import { CircleUserRound, LogOut, House } from "lucide-react";
 
 interface Group {
   group_id: string;
@@ -12,6 +12,7 @@ export interface NavProps {
   onClickAccount: () => void;
   onClickLogOut: () => void;
   onClickGroup: (id: string, name: string) => void;
+  onClickHome: () => void;
   groups?: Group[];
   borderless?: boolean;
 }
@@ -20,6 +21,7 @@ const NavBar = ({
   onClickAccount,
   onClickLogOut,
   onClickGroup,
+  onClickHome,
   groups = [],
   borderless = false,
 }: NavProps) => {
@@ -34,7 +36,16 @@ const NavBar = ({
       }`}
     >
       {/* TOP SECTION */}
-      <div>
+      <div className="flex flex-col gap-2">
+        {/* HOME BUTTON */}
+        <NavItem
+          style="lightBlue"
+          icon={House}
+          text="Home"
+          onClick={onClickHome}
+        />
+
+        {/* ALL GROUPS BUTTON */}
         <NavItem
           text="All groups"
           onClick={() => setToggle((prev) => !prev)}

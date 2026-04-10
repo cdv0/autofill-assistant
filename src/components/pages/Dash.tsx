@@ -228,6 +228,7 @@ const Dash = () => {
           await supabase.auth.signOut();
           navigate("/");
         }}
+        onClickHome={goToGroups}
       />
 
       {/* Delete Modal */}

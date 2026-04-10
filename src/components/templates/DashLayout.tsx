@@ -11,6 +11,7 @@ const DashLayout = ({
   // NavBar props
   onClickAccount,
   onClickLogOut,
+  onClickHome,
   // ControlBar props
   controlMode,
   onCreate,
@@ -54,6 +55,7 @@ const DashLayout = ({
             onClickAccount={onClickAccount}
             onClickLogOut={onClickLogOut}
             onClickGroup={onClickGroup}
+            onClickHome={onClickHome}
             groups={groups}
           />
         </div>
@@ -125,6 +127,7 @@ const DashLayout = ({
         <NavBar
           onClickAccount={() => { onClickAccount(); setDrawerOpen(false); }}
           onClickLogOut={onClickLogOut}
+          onClickHome={() => { onClickHome(); setDrawerOpen(false);}}
           onClickGroup={(id, name) => {
             onClickGroup(id, name);
             setDrawerOpen(false);
