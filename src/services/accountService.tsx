@@ -29,7 +29,7 @@ export const updateUserEmail = async (newEmail: string) => {
 
   const { data, error } = await supabase.auth.updateUser(
     {email: newEmail},
-    { emailRedirectTo: "http://localhost:5173/confirm?type=email_change" }
+    { emailRedirectTo: `${import.meta.env.VITE_WEBSITE_URL}confirm?type=email_change`}
 );
 
   console.log("Updated user:", data);
