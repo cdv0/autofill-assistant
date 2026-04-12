@@ -1,4 +1,4 @@
-import AuthForm, { type AuthFormProps } from "../organisms/AuthForm";
+import AuthForm from "../organisms/AuthForm";
 import { useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
 import { useNavigate } from "react-router-dom";

@@ -2,12 +2,11 @@ import Input from "../atoms/TextInput";
 import { Search } from "lucide-react";
 import GroupRow from "../molecules/GroupRow";
 import { useMemo, useState } from "react";
-import { type GroupData } from "./GroupView";
+import { type GroupData } from "../../types/groups";
 
 export interface GroupsProps {
   groups: GroupData[];
   onClickRow: (id: string, name: string) => void;
-  onClickBack?: () => void;
 }
 
 const Groups = ({ groups, onClickRow }: GroupsProps) => {
@@ -35,7 +34,7 @@ const Groups = ({ groups, onClickRow }: GroupsProps) => {
 
       <div className="flex justify-between">
         <p className="text-sm text-primary font-semibold">Group name</p>
-        <p className="text-sm text-primary font-semibold">Last modified</p>
+        <p className="text-sm text-primary font-semibold">Creation Date</p>
       </div>
 
       <div className="flex flex-col">
@@ -47,7 +46,7 @@ const Groups = ({ groups, onClickRow }: GroupsProps) => {
               <GroupRow
                 name={group.name}
                 dateModified={new Date(group.last_modified)}
-                onClickRow={() => onClickRow?.(group.group_id, group.name)}
+                onClickRow={() => onClickRow(group.group_id, group.name)}
               />
             </div>
           ))

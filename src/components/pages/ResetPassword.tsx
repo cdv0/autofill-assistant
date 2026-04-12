@@ -56,7 +56,7 @@ const ResetPassword = () => {
   return (
     <div className="min-h-screen w-full flex justify-center items-center">
       <div className="w-full max-w-md bg-white rounded-2xl px-6 py-8 flex flex-col gap-8">
-        <Logo size="lg" onClick={() => {}} />
+        <Logo size="lg" onClickLogo={() => {}} />
 
         <LabelInput
           labelText="New password"

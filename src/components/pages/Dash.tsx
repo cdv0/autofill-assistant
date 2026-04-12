@@ -6,7 +6,7 @@ import { createGroup, deleteGroup, fetchAllGroups } from "../../services/groupSe
 import { insertField } from "../../services/groupFieldService";
 import { useNavigate } from "react-router-dom";
 import { updateUserEmail, updateUserPassword, fetchUser } from "../../services/accountService";
-import { type GroupData } from "../organisms/GroupView";
+import { type GroupData } from "../../types/groups";
 
 type ShellMode = "groups" | "groupView" | "groupEditCreate" | "accountView" | "accountEdit";
 type ControlMode = "viewing" | "editing" | "editOnly" | "createOnly";
@@ -42,7 +42,7 @@ const Dash = () => {
   const [newGroupName, setNewGroupName] = useState("");
   const [newFieldLabel, setNewFieldLabel] = useState("");
   const [newFieldValue, setNewFieldValue] = useState("");
-  const [fieldCount, setFieldCount] = useState(0);
+  const [fieldCount] = useState(0);
   const [refreshKey, setRefreshKey] = useState(0);
   const [context, setContext] = useState<"groups" | "account">(
     savedShellMode.startsWith("account") ? "account" : "groups"
@@ -82,7 +82,7 @@ const Dash = () => {
 
   // Auth check using onAuthStateChange to avoid redirect flicker
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((session) => {
       if (!session) {
         navigate("/");
       } else {
@@ -210,12 +210,11 @@ const Dash = () => {
         onClickAddField={() => {}}
         onClickTrash={() => {}}
         refreshKey={refreshKey}
-        onFieldCountChange={setFieldCount}
         email={email}
         password={password}
         onEmailChange={setEmail}
         onPasswordChange={setPassword}
-        accountNotification={accountNotification}
+        accountNotification={accountNotification ?? undefined}
         controlMode={controlMode}
         onDelete={() => setShowDeleteModal(true)}
         onCreate={() => setShowCreateModal(true)}

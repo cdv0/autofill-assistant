@@ -40,7 +40,7 @@ const AuthForm = ({
 
   return (
     <div className="flex flex-col bg-white rounded-2xl px-6 py-8 gap-8 justify-center">
-      <Logo size="lg" onClick={() => {}} />
+      <Logo size="lg" onClickLogo={() => {}} />
 
       <LabelInput
         labelText="Email"

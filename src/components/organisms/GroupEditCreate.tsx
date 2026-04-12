@@ -1,36 +1,40 @@
 import Button from "../atoms/Button";
 import LabelInput from "../molecules/LabelInput";
 import { Plus } from "lucide-react";
-import { fetchGroup } from "../../services/groupService"
+import { fetchGroup } from "../../services/groupService";
 import { fetchRelatedGroupFields } from "../../services/groupFieldService";
-import { type GroupData, type GroupField } from "./GroupView";
+import { type GroupData, type GroupField } from "../../types/groups";
 import { useState, useEffect } from "react";
 
 export interface GroupEditProps {
   groupId: string;
   groupName?: string;
   onGroupNameChange?: (value: string) => void;
-  onClickBack?: () => void;
+  onClickBack: () => void;
   onClickAddField?: () => void;
   onClickTrash?: (fields_id: string) => void;
   onFieldsChange?: (fields: GroupField[]) => void;
-  context: "groups" | "account"; // Knows which to edit
+  context: "groups" | "account";
 }
 
-const GroupEdit = ({ groupName, onClickBack, onClickAddField, onClickTrash, onFieldsChange, onGroupNameChange, context, groupId }: GroupEditProps) => {
+const GroupEdit = ({
+  groupName,
+  onClickBack,
+  onClickAddField,
+  onClickTrash,
+  onFieldsChange,
+  onGroupNameChange,
+  context,
+  groupId,
+}: GroupEditProps) => {
   const [groupData, setGroupData] = useState<GroupData | null>(null);
   const [fields, setFields] = useState<GroupField[]>([]);
   const [notification, setNotification] = useState("");
 
   useEffect(() => {
     const loadGroupDetails = async () => {
-      if (!groupId) return;
-
       const group = await fetchGroup(groupId);
       const groupFields = await fetchRelatedGroupFields(groupId);
-
-      console.log("group:", group);
-      console.log("groupFields:", groupFields);
 
       setGroupData(group ?? null);
       setFields(groupFields ?? []);
@@ -40,7 +44,7 @@ const GroupEdit = ({ groupName, onClickBack, onClickAddField, onClickTrash, onFi
   }, [groupId]);
 
   const handleGroupNameChange = (value: string) => {
-    setGroupData((prev) => prev ? { ...prev, name: value } : prev);
+    setGroupData((prev) => (prev ? { ...prev, name: value } : prev));
     onGroupNameChange?.(value);
   };
 
@@ -55,7 +59,7 @@ const GroupEdit = ({ groupName, onClickBack, onClickAddField, onClickTrash, onFi
 
   const handleFieldValueChange = (fields_id: string, value: string) => {
     const updated = fields.map((field) =>
-      field.fields_id === fields_id ? { ...field, value: value } : field
+      field.fields_id === fields_id ? { ...field, value } : field
     );
 
     setFields(updated);
@@ -70,7 +74,6 @@ const GroupEdit = ({ groupName, onClickBack, onClickAddField, onClickTrash, onFi
     onClickTrash?.(fields_id);
   };
 
-  // If the last field's label is empty, then set a notification saying you can't add additional labels.
   const handleAddField = () => {
     const lastField = fields[fields.length - 1];
 
@@ -84,45 +87,54 @@ const GroupEdit = ({ groupName, onClickBack, onClickAddField, onClickTrash, onFi
       return;
     }
 
-    const updated = [
+    const updated: GroupField[] = [
       ...fields,
-      // Creating a new field below
       {
         fields_id: crypto.randomUUID(),
         group_id: groupId,
         label: "",
         value: "",
         position: fields.length + 1,
-      }
+      },
     ];
 
     setFields(updated);
     onFieldsChange?.(updated);
     onClickAddField?.();
   };
-  
+
   return (
     <div className="flex flex-col gap-6 relative">
-      {/* NOTIFICATION */}
       {notification !== "" && (
         <div className="absolute top-0 right-0 bg-white border border-stroke shadow-md rounded-xl px-4 py-3 z-10">
           <p className="text-sm text-darkGray">{notification}</p>
         </div>
       )}
 
-      {/* TOP BAR */}
       <div className="flex justify-between">
-        <h1 className=" text-lg text-darkGray">Groups {">"} <span className="text-primary font-medium">{groupName ?? groupData?.name ?? ""}</span></h1>
-        <Button color="secondaryNoFill" name="Back" onClick={onClickBack}/>
+        <h1 className="text-lg text-darkGray">
+          Groups {">"}{" "}
+          <span className="text-primary font-medium">
+            {groupName ?? groupData?.name ?? ""}
+          </span>
+        </h1>
+        <Button color="secondaryNoFill" name="Back" onClick={onClickBack} />
       </div>
 
       {context === "groups" && (
         <div className="pb-8">
-          <LabelInput labelText="Group name" type="text" placeholder="Enter group name" value={groupName ?? groupData?.name ?? ""} onChange={(e: any) => handleGroupNameChange(e.target.value)}/>
+          <LabelInput
+            labelText="Group name"
+            type="text"
+            placeholder="Enter group name"
+            value={groupName ?? groupData?.name ?? ""}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleGroupNameChange(e.target.value)
+            }
+          />
         </div>
       )}
 
-      {/* GRID COLUMNS */}
       <div className="grid grid-cols-2 gap-x-12 gap-y-8">
         {fields.map((field) => (
           <div key={field.fields_id} className="flex flex-col gap-3">
@@ -131,9 +143,11 @@ const GroupEdit = ({ groupName, onClickBack, onClickAddField, onClickTrash, onFi
               placeholder="Enter label"
               type="text"
               value={field.label}
-              onChange={(e: any) => handleFieldLabelChange(field.fields_id, e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleFieldLabelChange(field.fields_id, e.target.value)
+              }
               addTrashIcon={true}
-              onClickTrash={() => handleDeleteField(field.fields_id)} // TODO: ADD LOGIC
+              onClickTrash={() => handleDeleteField(field.fields_id)}
             />
 
             <LabelInput
@@ -141,15 +155,21 @@ const GroupEdit = ({ groupName, onClickBack, onClickAddField, onClickTrash, onFi
               placeholder="Type here"
               type="text"
               value={field.value ?? ""}
-              onChange={(e: any) => handleFieldValueChange(field.fields_id, e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                handleFieldValueChange(field.fields_id, e.target.value)
+              }
             />
           </div>
         ))}
 
-        {/* ADD NEW FIELD BUTTON */}
         {context === "groups" && (
           <div className="pt-7">
-            <Button color="darkGrayNoFill" name="Add new field" icon={Plus} onClick={handleAddField}/>
+            <Button
+              color="darkGrayNoFill"
+              name="Add new field"
+              icon={Plus}
+              onClick={handleAddField}
+            />
           </div>
         )}
       </div>

@@ -3,10 +3,12 @@ import LabelView from "../molecules/LabelView";
 import { fetchUser } from "../../services/accountService";
 
 export interface AccountViewProps {
-  notification?: string | null;
+  email?: string;
+  password?: string;
+  accountNotification?: string;
 }
 
-const AccountView = ({ notification }: AccountViewProps) => {
+const AccountView = ({ accountNotification }: AccountViewProps) => {
   const [email, setEmail] = useState<string>("");
   const [pendingEmail, setPendingEmail] = useState<string | null>(null);
 
@@ -31,10 +33,10 @@ const AccountView = ({ notification }: AccountViewProps) => {
       </div>
 
       {/* Top-right notification */}
-      {(notification || pendingEmail) && (
+      {(accountNotification || pendingEmail) && (
         <div className="absolute top-0 right-0 bg-white border border-stroke shadow-md rounded-xl px-4 py-3 z-10">
           <p className="text-sm text-darkGray">
-            {notification ?? `Confirm new email: ${pendingEmail}`}
+            {accountNotification ?? `Confirm new email: ${pendingEmail}`}
           </p>
         </div>
       )}

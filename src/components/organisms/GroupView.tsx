@@ -4,17 +4,12 @@ import Modal from "../organisms/Modal";
 import { useEffect, useState, useCallback } from "react";
 import { fetchGroup } from "../../services/groupService"
 import { fetchRelatedGroupFields, updateSingleField, deleteSingleField } from "../../services/groupFieldService";
+import { type GroupData } from "../../types/groups";
 
 export interface GroupViewProps {
   groupId: string;
   refreshKey?: number;
-  onClickBack?: () => void;
-}
-
-export type GroupData = {
-  group_id: string;
-  name: string;
-  last_modified: string;
+  onClickBack: () => void;
 }
 
 export type GroupField = {

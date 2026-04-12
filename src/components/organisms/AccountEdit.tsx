@@ -3,17 +3,18 @@ import LabelInput from "../molecules/LabelInput";
 import { fetchUser } from "../../services/accountService";
 
 export interface AccountEditProps {
-  email: string;
-  password: string;
-  onEmailChange: (val: string) => void;
-  onPasswordChange: (val: string) => void;
+  email?: string;
+  password?: string;
+  onEmailChange?: (val: string) => void;
+  onPasswordChange?: (val: string) => void;
+  accountNotification?: string;
 }
 
 const AccountEdit = ({ email, password, onEmailChange, onPasswordChange }: AccountEditProps) => {
   useEffect(() => {
     const loadUser = async () => {
       const user = await fetchUser();
-      if (user?.email) onEmailChange(user.email);
+      if (user?.email) onEmailChange?.(user.email);
     };
     loadUser();
   }, []);
@@ -30,14 +31,14 @@ const AccountEdit = ({ email, password, onEmailChange, onPasswordChange }: Accou
           type="text"
           placeholder="Enter email"
           value={email}
-          onChange={(e) => onEmailChange(e.target.value)}
+          onChange={(e) => onEmailChange?.(e.target.value)}
         />
         <LabelInput
           labelText="Password"
           type="password"
           placeholder="Enter new password"
           value={password}
-          onChange={(e) => onPasswordChange(e.target.value)}
+          onChange={(e) => onPasswordChange?.(e.target.value)}
           showPassword={false}
         />
       </div>

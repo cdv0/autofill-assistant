@@ -1,19 +1,14 @@
 import NavItem from "../atoms/NavItem";
 import { useState, useMemo } from "react";
 import { CircleUserRound, LogOut, House } from "lucide-react";
-
-interface Group {
-  group_id: string;
-  name: string;
-  last_modified?: string;
-}
+import { type GroupData } from "../../types/groups";
 
 export interface NavProps {
   onClickAccount: () => void;
   onClickLogOut: () => void;
-  onClickGroup: (id: string, name: string) => void;
   onClickHome: () => void;
-  groups?: Group[];
+  onClickGroup: (id: string, name: string) => void;
+  groups: GroupData[];
   borderless?: boolean;
 }
 
